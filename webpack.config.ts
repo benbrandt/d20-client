@@ -1,10 +1,13 @@
 import WasmPackPlugin from "@wasm-tool/wasm-pack-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import CleanWebpackPlugin from "clean-webpack-plugin";
+import CopyWebpackPlugin from "copy-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import OptimizeCSSAssetsPlugin from "optimize-css-assets-webpack-plugin";
+import PreloadWebpackPlugin from "preload-webpack-plugin";
+import SizePlugin from "size-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import path from "path";
 import webpack from "webpack";
@@ -106,7 +109,10 @@ const config: webpack.Configuration = {
     isEnvProd &&
       new BundleAnalyzerPlugin({ analyzerMode: "static", openAnalyzer: false }),
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({ template: "index.html" }),
+    new CopyWebpackPlugin([
+      { from: "public", to: ".", ignore: ["index.html"] }
+    ]),
+    new HtmlWebpackPlugin({ template: "public/index.html" }),
     new ForkTsCheckerWebpackPlugin({
       async: env === "development",
       checkSyntacticErrors: true,
@@ -118,6 +124,11 @@ const config: webpack.Configuration = {
         filename: "[name].[contenthash].css",
         chunkFilename: "[name].[contenthash].css"
       }),
+    isEnvProd &&
+      new PreloadWebpackPlugin({
+        fileBlacklist: [/\.map/, /\.wasm/]
+      }),
+    isEnvProd && new SizePlugin(),
     new WasmPackPlugin({
       crateDirectory: path.resolve(__dirname, "./")
     })

@@ -1,0 +1,15 @@
+{
+  "short_name": "d20",
+  "name": "d20",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#00d1b2",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192"
+    }
+  ]
+}
