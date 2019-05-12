@@ -18,10 +18,11 @@ before_cache:
   - rm -rf $HOME/.cargo/registry
 
 script:
-  - cargo fmt -- --check
-  - cargo clippy --all-targets --all-features -- -D warnings
   - yarn --frozen-lockfile
   - yarn lint
+  - cargo fmt -- --check
+  - cargo check
+  - cargo clippy --all-targets --all-features -- -D warnings
   - yarn test
   - yarn build
 
