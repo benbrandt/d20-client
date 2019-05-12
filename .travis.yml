@@ -10,9 +10,9 @@ before_install:
   - rustup component add rustfmt
 
 cache:
-  - yarn
   - directories:
       - $HOME/.cargo
+      - $HOME/.cache/yarn
 
 before_cache:
   - rm -rf $HOME/.cargo/registry
