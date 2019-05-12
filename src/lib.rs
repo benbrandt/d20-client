@@ -1,5 +1,5 @@
-use seed::button;
 use seed::prelude::*;
+use seed::{attrs, button, class, div, form, h1, input, select, span};
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -33,9 +33,57 @@ fn update(msg: Msg, model: &mut Model) -> Update<Msg> {
 
 // View
 fn view(model: &Model) -> El<Msg> {
-    button![
-        simple_ev(Ev::Click, Msg::Increment),
-        format!("Hello, World × {}", model.val)
+    div![
+        class!["content", "section"],
+        h1![class!["title", "has-text-centered"], "Dice Roller"],
+        div![
+            class!["container"],
+            form![div![
+                class!["field", "has-addons", "has-addons-centered"],
+                div![
+                    class!["control", "has-icons-left"],
+                    input![attrs! {
+                        At::Class => "input";
+                        At::Id => "num";
+                        At::Min => 1;
+                        At::Max => 99;
+                        At::Name => "num";
+                        At::Type => "number"
+                    }],
+                    span![class!["icon", "is-small", "is-left"], "#"]
+                ],
+                div![
+                    class!["control", "has-icons-left"],
+                    span![
+                        class!["select"],
+                        select![attrs! {At::Id => "die"; At::Name => "die"}]
+                    ],
+                    span![class!["icon", "is-small", "is-left"], "d20"]
+                ],
+                div![
+                    class!["control", "has-icons-left"],
+                    input![attrs! {
+                        At::Class => "input";
+                        At::Id => "modifier";
+                        At::Name => "modifier";
+                        At::PlaceHolder => "Modifier";
+                        At::Type => "number";
+                    }],
+                    span![class!["icon", "is-small", "is-left"], "+"]
+                ],
+                div![
+                    class!["control"],
+                    button![
+                        attrs! {At::Class => "button is-primary"; At::Type => "submit" },
+                        "Roll"
+                    ]
+                ],
+            ]],
+            button![
+                simple_ev(Ev::Click, Msg::Increment),
+                format!("Hello, World × {}", model.val)
+            ]
+        ]
     ]
 }
 
