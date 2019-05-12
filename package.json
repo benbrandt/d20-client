@@ -11,7 +11,20 @@
     "optimize-wasm": "TS_NODE_PROJECT=\"webpack.tsconfig.json\" ts-node scripts/optimize_wasm.ts",
     "lint": "eslint \"js/**/*.ts\""
   },
-  "browserslist": "> 0.25%, Firefox ESR, not dead, not op_mini all",
+  "browserslist": [
+    "Chrome >=57 and >0.2%",
+    "Edge >= 16 and >0.2%",
+    "Firefox >= 52 and >0.2%",
+    "Opera >= 44 and >0.2%",
+    "Safari >= 11 and >0.2%",
+    "Android >= 57 and >0.2%",
+    "ChromeAndroid >= 57 and >0.2%",
+    "FirefoxAndroid >= 52 and >0.2%",
+    "iOS >= 11 and >0.2%",
+    "Samsung >= 7 and >0.2%",
+    "OperaMobile >= 46 and >0.2%",
+    "not dead"
+  ],
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
     "extends": [
