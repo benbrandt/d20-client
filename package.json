@@ -53,6 +53,7 @@
     "@types/webpack": "^4.4.31",
     "@types/webpack-bundle-analyzer": "^2.13.1",
     "@types/webpack-dev-server": "^3.1.5",
+    "@types/workbox-webpack-plugin": "^4.1.0",
     "@typescript-eslint/eslint-plugin": "^1.8.0",
     "@typescript-eslint/parser": "^1.8.0",
     "@wasm-tool/wasm-pack-plugin": "^0.2.7",
@@ -88,7 +89,8 @@
     "webpack": "^4.31.0",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.3.2",
-    "webpack-dev-server": "^3.3.1"
+    "webpack-dev-server": "^3.3.1",
+    "workbox-webpack-plugin": "^4.3.1"
   },
   "dependencies": {
     "@sentry/browser": "^5.2.0",

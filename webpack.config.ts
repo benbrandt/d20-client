@@ -5,12 +5,13 @@ import CopyWebpackPlugin from "copy-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import path from "path";
 import OptimizeCSSAssetsPlugin from "optimize-css-assets-webpack-plugin";
 import PreloadWebpackPlugin from "preload-webpack-plugin";
 import SizePlugin from "size-plugin";
 import TerserPlugin from "terser-webpack-plugin";
-import path from "path";
 import webpack from "webpack";
+import WorkboxWebpackPlugin from "workbox-webpack-plugin";
 
 const dist = path.resolve(__dirname, "dist");
 
@@ -131,7 +132,18 @@ const config: webpack.Configuration = {
     isEnvProd && new SizePlugin(),
     new WasmPackPlugin({
       crateDirectory: path.resolve(__dirname, "./")
-    })
+    }),
+    isEnvProd &&
+      new WorkboxWebpackPlugin.GenerateSW({
+        clientsClaim: true,
+        importWorkboxFrom: "local",
+        navigateFallback: "/index.html",
+        navigateFallbackBlacklist: [
+          // Exclude URLs containing a dot, as they're likely a resource in
+          // public/ and not a SPA route
+          new RegExp("/[^/]+\\.[^/]+$")
+        ]
+      })
   ].filter(Boolean)
 };
 
