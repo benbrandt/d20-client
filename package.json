@@ -12,17 +12,17 @@
     "lint": "eslint \"js/**/*.ts\""
   },
   "browserslist": [
-    "Chrome >=57 and >0.2%",
-    "Edge >= 16 and >0.2%",
-    "Firefox >= 52 and >0.2%",
-    "Opera >= 44 and >0.2%",
-    "Safari >= 11 and >0.2%",
-    "Android >= 57 and >0.2%",
-    "ChromeAndroid >= 57 and >0.2%",
-    "FirefoxAndroid >= 52 and >0.2%",
-    "iOS >= 11 and >0.2%",
-    "Samsung >= 7 and >0.2%",
-    "OperaMobile >= 46 and >0.2%",
+    "Chrome >=57 and >0.5%",
+    "Edge >= 16 and >0.5%",
+    "Firefox >= 52 and >0.5%",
+    "Opera >= 44 and >0.5%",
+    "Safari >= 11 and >0.5%",
+    "Android >= 57 and >0.5%",
+    "ChromeAndroid >= 57 and >0.5%",
+    "FirefoxAndroid >= 52 and >0.5%",
+    "iOS >= 11 and >0.5%",
+    "Samsung >= 7 and >0.5%",
+    "OperaMobile >= 46 and >0.5%",
     "not dead"
   ],
   "eslintConfig": {
