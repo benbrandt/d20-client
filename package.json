@@ -95,6 +95,7 @@
   "dependencies": {
     "@sentry/browser": "^5.2.1",
     "bulma": "^0.7.4",
-    "fast-text-encoding": "^1.0.0"
+    "fast-text-encoding": "^1.0.0",
+    "register-service-worker": "^1.6.2"
   }
 }
