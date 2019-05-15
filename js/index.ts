@@ -1,3 +1,4 @@
+/* eslint-disable no-console, no-undef */
 import "bulma/bulma.sass";
 import * as Sentry from "@sentry/browser";
 import { register } from "register-service-worker";
@@ -15,27 +16,27 @@ import("../pkg").then(
 );
 
 register("/service-worker.js", {
-  ready() {
+  ready(): void {
     console.log("Service worker is active.");
   },
-  registered() {
+  registered(): void {
     console.log("Service worker has been registered.");
   },
-  cached() {
+  cached(): void {
     console.log("Content has been cached for offline use.");
   },
-  updatefound() {
+  updatefound(): void {
     console.log("New content is downloading.");
   },
-  updated() {
+  updated(): void {
     console.log("New content is available; please refresh.");
   },
-  offline() {
+  offline(): void {
     console.log(
       "No internet connection found. App is running in offline mode."
     );
   },
-  error(error) {
+  error(error): void {
     Sentry.captureException(error);
     console.error("Error during service worker registration:", error);
   }
