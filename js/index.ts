@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-undef */
+/* eslint-disable no-console */
 import "bulma/bulma.sass";
 import * as Sentry from "@sentry/browser";
 import { register } from "register-service-worker";

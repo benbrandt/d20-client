@@ -9,26 +9,35 @@
     "build": "NODE_ENV=production TS_NODE_PROJECT=\"webpack.tsconfig.json\" webpack --mode=production && yarn optimize-wasm",
     "test": "wasm-pack test --node",
     "optimize-wasm": "TS_NODE_PROJECT=\"webpack.tsconfig.json\" ts-node scripts/optimize_wasm.ts",
-    "lint": "eslint \"js/**/*.ts\""
+    "lint": "eslint --ext .ts --ext .js ./js/**/*"
   },
   "browserslist": [
-    "Chrome >=57 and >0.5%",
-    "Edge >= 16 and >0.5%",
-    "Firefox >= 52 and >0.5%",
-    "Opera >= 44 and >0.5%",
-    "Safari >= 11 and >0.5%",
-    "Android >= 57 and >0.5%",
-    "ChromeAndroid >= 57 and >0.5%",
-    "FirefoxAndroid >= 52 and >0.5%",
-    "iOS >= 11 and >0.5%",
-    "Samsung >= 7 and >0.5%",
-    "OperaMobile >= 46 and >0.5%",
+    "Chrome >=57 and >0.25%",
+    "Edge >= 16 and >0.25%",
+    "Firefox >= 52 and >0.25%",
+    "Opera >= 44 and >0.25%",
+    "Safari >= 11 and >0.25%",
+    "Android >= 57 and >0.25%",
+    "ChromeAndroid >= 57 and >0.25%",
+    "FirefoxAndroid >= 52 and >0.25%",
+    "iOS >= 11 and >0.25%",
+    "Samsung >= 7 and >0.25%",
+    "OperaMobile >= 46 and >0.25%",
     "not dead"
   ],
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 2019,
+      "sourceType": "module"
+    },
     "extends": [
       "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
       "plugin:@typescript-eslint/recommended",
       "plugin:import/errors",
       "plugin:import/warnings",
