@@ -1058,10 +1058,10 @@
     lodash.unescape "4.0.1"
     semver "5.5.0"
 
-"@wasm-tool/wasm-pack-plugin@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@wasm-tool/wasm-pack-plugin/-/wasm-pack-plugin-0.3.0.tgz#76e8fe418a80a17d3fda00c6d6336d5bdee045c8"
-  integrity sha512-Sh4fhwzvg929PMGGhy74sQDIGcPvlBCgjq4JYiRKzxlfNSui7I5QXJLY9eKWmsaPCUIxLvdowin4JqUXVPKoog==
+"@wasm-tool/wasm-pack-plugin@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@wasm-tool/wasm-pack-plugin/-/wasm-pack-plugin-0.4.2.tgz#833a543df39e9ddb050b2d4fb57cba469d587979"
+  integrity sha512-ZvQ+KblhUXSViP//Lpa7CpNGf4hkfXLU70q9r2cxEJj/LFSIkwEqEoHmmN4WPMj4fWU7S4CFZwa/pUGxdbVqtQ==
   dependencies:
     chalk "^2.4.1"
     command-exists "^1.2.7"
