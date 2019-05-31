@@ -1,6 +1,6 @@
 import WasmPackPlugin from "@wasm-tool/wasm-pack-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
-import CleanWebpackPlugin from "clean-webpack-plugin";
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
