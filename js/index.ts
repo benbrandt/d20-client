@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import "bulma/bulma.sass";
+import "spectre.css/src/spectre.scss";
 import * as Sentry from "@sentry/browser";
 import { register } from "register-service-worker";
 

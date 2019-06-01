@@ -1,5 +1,5 @@
 use seed::prelude::*;
-use seed::{attrs, button, class, div, form, h1, input, select, span};
+use seed::{attrs, button, class, div, form, h1, input, option, select, span};
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -33,55 +33,52 @@ fn update(msg: Msg, model: &mut Model, _orders: &mut Orders<Msg>) {
 // View
 fn view(model: &Model) -> El<Msg> {
     div![
-        class!["content", "section"],
-        h1![class!["title", "has-text-centered"], "Dice Roller"],
-        div![
-            class!["container"],
-            form![div![
-                class!["field", "has-addons", "has-addons-centered"],
-                div![
-                    class!["control", "has-icons-left"],
-                    input![attrs! {
-                        At::Class => "input";
-                        At::Id => "num";
-                        At::Min => 1;
-                        At::Max => 99;
-                        At::Name => "num";
-                        At::Type => "number"
-                    }],
-                    span![class!["icon", "is-small", "is-left"], "#"]
-                ],
-                div![
-                    class!["control", "has-icons-left"],
-                    span![
-                        class!["select"],
-                        select![attrs! {At::Id => "die"; At::Name => "die"}]
-                    ],
-                    span![class!["icon", "is-small", "is-left"], "d20"]
-                ],
-                div![
-                    class!["control", "has-icons-left"],
-                    input![attrs! {
-                        At::Class => "input";
-                        At::Id => "modifier";
-                        At::Name => "modifier";
-                        At::PlaceHolder => "Modifier";
-                        At::Type => "number";
-                    }],
-                    span![class!["icon", "is-small", "is-left"], "+"]
-                ],
-                div![
-                    class!["control"],
-                    button![
-                        attrs! {At::Class => "button is-primary"; At::Type => "submit" },
-                        "Roll"
-                    ]
-                ],
-            ]],
+        class!["container", "grid-lg"],
+        h1![class!["text-center"], "Dice Roller"],
+        form![div![
+            class!["input-group"],
+            span![class!["input-group-addon"], "#"],
+            input![attrs! {
+                At::Class => "form-input";
+                At::Id => "num";
+                At::Min => 1;
+                At::Max => 99;
+                At::Name => "num";
+                At::Type => "number";
+                At::Value => 1;
+            }],
+            span![class!["input-group-addon"], "d"],
+            select![
+                attrs! {
+                    At::Class => "form-select";
+                    At::Id => "die";
+                    At::Name => "die";
+                },
+                option![attrs! {At::Value => 4}, "d4"],
+                option![attrs! {At::Value => 6}, "d6"],
+                option![attrs! {At::Value => 8}, "d8"],
+                option![attrs! {At::Value => 10}, "d10"],
+                option![attrs! {At::Value => 12}, "d12"],
+                option![attrs! {At::Value => 20}, "d20"],
+                option![attrs! {At::Value => 100}, "d100"],
+            ],
+            span![class!["input-group-addon"], "+"],
+            input![attrs! {
+                At::Class => "form-input";
+                At::Id => "modifier";
+                At::Name => "modifier";
+                At::PlaceHolder => "Modifier";
+                At::Type => "number";
+            }],
             button![
-                simple_ev(Ev::Click, Msg::Increment),
-                format!("Hello, World × {}", model.val)
+                attrs! {At::Class => "btn btn-primary input-group-btn"; At::Type => "submit" },
+                "Roll"
             ]
+        ]],
+        button![
+            simple_ev(Ev::Click, Msg::Increment),
+            class!["btn"],
+            format!("Hello, World × {}", model.val)
         ]
     ]
 }

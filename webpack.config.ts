@@ -7,8 +7,8 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import path from "path";
 import OptimizeCSSAssetsPlugin from "optimize-css-assets-webpack-plugin";
+import postCssPresetEnv from "postcss-preset-env";
 import PreloadWebpackPlugin from "preload-webpack-plugin";
-import SizePlugin from "size-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import webpack from "webpack";
 import WorkboxWebpackPlugin from "workbox-webpack-plugin";
@@ -29,7 +29,7 @@ const getStyleLoaders = (cssOptions: Object, preProcessor?: string) => {
       loader: "postcss-loader",
       options: {
         ident: "postcss",
-        plugins: () => [require("postcss-preset-env")()],
+        plugins: () => [postCssPresetEnv()],
         sourceMap: true
       }
     }
@@ -129,7 +129,6 @@ const config: webpack.Configuration = {
       new PreloadWebpackPlugin({
         fileBlacklist: [/\.map/, /\.wasm/]
       }),
-    isEnvProd && new SizePlugin(),
     new WasmPackPlugin({
       crateDirectory: path.resolve(__dirname, "./")
     }),
