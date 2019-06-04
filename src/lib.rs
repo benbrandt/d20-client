@@ -14,6 +14,11 @@ use web_sys::Event;
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
+#[cfg(debug_assertions)]
+const BACKEND_URL: &str = "http://localhost:3000";
+#[cfg(not(debug_assertions))]
+const BACKEND_URL: &str = "https://morning-eyrie-18336.herokuapp.com/";
+
 #[derive(Clone, Debug, Deserialize, Serialize)]
 struct RollInstruction {
     num: i32,
@@ -97,7 +102,7 @@ fn update(msg: Msg, Model { form, rolls }: &mut Model, orders: &mut Orders<Msg>)
 }
 
 fn get_roll(instruction: &RollInstruction) -> impl Future<Item = Msg, Error = Msg> {
-    Request::new("http://localhost:3000/roll/")
+    Request::new(&format!("{}/roll/", BACKEND_URL))
         .method(Method::Post)
         .body_json(instruction)
         .fetch_json()
