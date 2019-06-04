@@ -17,7 +17,7 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 #[cfg(debug_assertions)]
 const BACKEND_URL: &str = "http://localhost:3000";
 #[cfg(not(debug_assertions))]
-const BACKEND_URL: &str = "https://morning-eyrie-18336.herokuapp.com/";
+const BACKEND_URL: &str = "https://morning-eyrie-18336.herokuapp.com";
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 struct RollInstruction {
