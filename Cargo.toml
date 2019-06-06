@@ -13,10 +13,11 @@ edition = "2018"
 crate-type = ["cdylib"]
 
 [dependencies]
-wasm-bindgen = "0.2"
+futures = "0.1"
+js-sys = "0.3"
 seed = "0.3"
 serde = { version = "1", features = ['derive'] }
-futures = "0.1"
+wasm-bindgen = "0.2"
 
 # The `console_error_panic_hook` crate provides better debugging of panics by
 # logging them with `console.error`. This is great for development, but requires

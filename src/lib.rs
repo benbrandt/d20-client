@@ -1,11 +1,13 @@
 use futures::Future;
+use js_sys::Date;
 use seed::prelude::*;
 use seed::{
-    attrs, button, class, div, error, form, h1, h5, input, option, select, span, strong, Method,
+    attrs, button, class, div, empty, form, h2, input, option, select, span, strong, style, Method,
     Request,
 };
 use serde::{Deserialize, Serialize};
 use std::fmt;
+use wasm_bindgen::JsValue;
 use web_sys::Event;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -54,15 +56,23 @@ struct RollResult {
     total: i32,
 }
 
+#[derive(Debug)]
+struct RollWithTime {
+    result: RollResult,
+    time: Date,
+}
+
 // Model
 struct Model {
+    error: Option<String>,
     form: RollInstruction,
-    rolls: Vec<RollResult>,
+    rolls: Vec<RollWithTime>,
 }
 
 impl Default for Model {
     fn default() -> Self {
         Self {
+            error: None,
             form: RollInstruction {
                 num: 1,
                 die: 20,
@@ -84,20 +94,24 @@ enum Msg {
     ReceiveRoll(RollResult),
 }
 
-fn update(msg: Msg, Model { form, rolls }: &mut Model, orders: &mut Orders<Msg>) {
+fn update(msg: Msg, model: &mut Model, orders: &mut Orders<Msg>) {
     match msg {
-        Msg::ChangeDie(val) => form.die = val.parse().unwrap_or(form.die),
-        Msg::ChangeModifier(val) => form.modifier = val.parse().unwrap_or(form.modifier),
-        Msg::ChangeNum(val) => form.num = val.parse().unwrap_or(form.num),
+        Msg::ChangeDie(val) => model.form.die = val.parse().unwrap_or(model.form.die),
+        Msg::ChangeModifier(val) => {
+            model.form.modifier = val.parse().unwrap_or(model.form.modifier)
+        }
+        Msg::ChangeNum(val) => model.form.num = val.parse().unwrap_or(model.form.num),
         Msg::GetRoll(event) => {
             event.prevent_default();
-            orders.skip().perform_cmd(get_roll(form));
+            orders.skip().perform_cmd(get_roll(&model.form));
         }
         Msg::OnFetchErr(err) => {
-            error!(format!("Fetch error: {:?}", err));
-            orders.skip();
+            model.error = Some(format!("Error: {:?}", err));
         }
-        Msg::ReceiveRoll(result) => rolls.push(result),
+        Msg::ReceiveRoll(result) => model.rolls.push(RollWithTime {
+            result,
+            time: Date::new_0(),
+        }),
     }
 }
 
@@ -118,24 +132,33 @@ fn dice_option(form: &RollInstruction, die: i32) -> El<Msg> {
     option![attributes, format!("d{}", die)]
 }
 
-fn roll_result(rolls: &[RollResult]) -> El<Msg> {
+fn roll_result(rolls: &[RollWithTime]) -> El<Msg> {
     let roll_view: Vec<El<Msg>> = rolls
         .iter()
         .rev()
-        .map(|result| {
-            let roll_data: Vec<El<Msg>> = result
-                .rolls
-                .iter()
-                .map(|r| div![format!("d{}: ", r.die), strong![format!("{}", r.value)]])
-                .collect();
+        .map(|RollWithTime { result, time }| {
             div![
-                class!["columns"],
-                h5![
-                    class!["col-6 p-2 text-right"],
+                class!["columns", "flex-centered", "py-2"],
+                div![
+                    class!["column", "col-6", "h5", "text-right"],
                     format!("{}: ", result.instruction),
                     strong![class!["text-large"], format!("{}", result.total)],
                 ],
-                div![class!["col-6 p-2"], roll_data],
+                div![
+                    class!["column", "col-6"],
+                    strong!["Rolls: "],
+                    result
+                        .rolls
+                        .iter()
+                        .map(|r| format!("{}", r.value))
+                        .collect::<Vec<String>>()
+                        .join(", ")
+                ],
+                div![
+                    class!["column", "col-12", "text-center"],
+                    style! {"font-size" => "75%";},
+                    String::from(time.to_locale_string("default", &JsValue::UNDEFINED))
+                ]
             ]
         })
         .collect();
@@ -143,12 +166,17 @@ fn roll_result(rolls: &[RollResult]) -> El<Msg> {
 }
 
 // View
-fn view(Model { form, rolls }: &Model) -> El<Msg> {
+fn view(Model { error, form, rolls }: &Model) -> El<Msg> {
     div![
-        class!["container", "grid-lg"],
-        h1![class!["text-center"], "Dice Roller"],
+        class!["container", "grid-lg", "p-2"],
+        h2![class!["pt-2", "text-center"], "Dice Roller"],
+        match error {
+            Some(e) => div![class!["toast", "toast-error"], e],
+            None => empty(),
+        },
         form![
             raw_ev(Ev::Submit, Msg::GetRoll),
+            class!["p-2"],
             div![
                 class!["input-group"],
                 span![class!["input-group-addon"], "#"],
