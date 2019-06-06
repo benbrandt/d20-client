@@ -44,7 +44,7 @@ features = [
 wasm-bindgen-test = "0.2"
 
 [features]
-default = ["console_error_panic_hook"]
+default = ["console_error_panic_hook", "wee_alloc"]
 
 [profile.release]
 lto = true

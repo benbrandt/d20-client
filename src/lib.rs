@@ -206,12 +206,12 @@ fn view(Model { form, rolls }: &Model) -> El<Msg> {
 // Called by our JS entry point
 #[wasm_bindgen]
 pub fn render() {
+    set_panic_hook();
     seed::App::build(Model::default(), update, view)
         .finish()
         .run();
 }
 
-#[allow(dead_code)]
 fn set_panic_hook() {
     // When the `console_error_panic_hook` feature is enabled, we can call the
     // `set_panic_hook` function to get better error messages if we ever panic.
