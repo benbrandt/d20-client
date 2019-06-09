@@ -135,13 +135,15 @@ const config: webpack.Configuration = {
     isEnvProd &&
       new WorkboxWebpackPlugin.GenerateSW({
         clientsClaim: true,
+        dontCacheBustUrlsMatching: /(\.\w{20}\.|\w{20}\.module\.wasm)/,
         importWorkboxFrom: "local",
         navigateFallback: "/index.html",
         navigateFallbackBlacklist: [
           // Exclude URLs containing a dot, as they're likely a resource in
           // public/ and not a SPA route
           new RegExp("/[^/]+\\.[^/]+$")
-        ]
+        ],
+        skipWaiting: true
       })
   ].filter(Boolean)
 };
