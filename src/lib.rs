@@ -169,7 +169,7 @@ fn view(Model { error, form, rolls }: &Model) -> El<Msg> {
         h2![class!["pt-2", "text-center"], "Dice Roller"],
         match error {
             Some(e) => div![class!["toast", "toast-error"], e],
-            None => empty(),
+            None => empty![],
         },
         form![
             raw_ev(Ev::Submit, Msg::GetRoll),
