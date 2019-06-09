@@ -2,8 +2,8 @@ use futures::Future;
 use js_sys::Date;
 use seed::prelude::*;
 use seed::{
-    attrs, button, class, div, empty, form, h2, input, option, select, span, strong, style, Method,
-    Request,
+    attrs, button, class, div, empty, fetch, form, h2, input, option, select, span, strong, style,
+    Method, Request,
 };
 use serde::{Deserialize, Serialize};
 use std::fmt;
@@ -90,8 +90,7 @@ enum Msg {
     ChangeModifier(String),
     ChangeNum(String),
     GetRoll(Event),
-    OnFetchErr(JsValue),
-    ReceiveRoll(RollResult),
+    ReceiveRoll(Box<fetch::FetchObject<RollResult>>),
 }
 
 fn update(msg: Msg, model: &mut Model, orders: &mut Orders<Msg>) {
@@ -105,23 +104,21 @@ fn update(msg: Msg, model: &mut Model, orders: &mut Orders<Msg>) {
             event.prevent_default();
             orders.skip().perform_cmd(get_roll(&model.form));
         }
-        Msg::OnFetchErr(err) => {
-            model.error = Some(format!("Error: {:?}", err));
-        }
-        Msg::ReceiveRoll(result) => model.rolls.push(RollWithTime {
-            result,
-            time: Date::new_0(),
-        }),
+        Msg::ReceiveRoll(fetch_object) => match fetch_object.response() {
+            Ok(response) => model.rolls.push(RollWithTime {
+                result: response.data,
+                time: Date::new_0(),
+            }),
+            Err(fail_reason) => model.error = Some(format!("Error: {:#?}", fail_reason)),
+        },
     }
 }
 
 fn get_roll(instruction: &RollInstruction) -> impl Future<Item = Msg, Error = Msg> {
-    Request::new(&format!("{}/roll/", BACKEND_URL))
+    Request::new(format!("{}/roll/", BACKEND_URL))
         .method(Method::Post)
         .body_json(instruction)
-        .fetch_json()
-        .map(Msg::ReceiveRoll)
-        .map_err(Msg::OnFetchErr)
+        .fetch_json(|r| Msg::ReceiveRoll(Box::new(r)))
 }
 
 fn dice_option(form: &RollInstruction, die: i32) -> El<Msg> {
