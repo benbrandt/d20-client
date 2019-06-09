@@ -9,11 +9,9 @@ Sentry.init({
 
 // @ts-ignore
 // eslint-disable-next-line import/no-unresolved
-import("../pkg").then(
-  (module): void => {
-    module.render();
-  }
-);
+import("../pkg").then((module): void => {
+  module.render();
+});
 
 register("/service-worker.js", {
   ready(): void {
