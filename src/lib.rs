@@ -44,15 +44,9 @@ impl fmt::Display for RollInstruction {
 }
 
 #[derive(Clone, Deserialize, Debug)]
-struct DiceResult {
-    die: i32,
-    value: i32,
-}
-
-#[derive(Clone, Deserialize, Debug)]
 struct RollResult {
     instruction: RollInstruction,
-    rolls: Vec<DiceResult>,
+    rolls: Vec<i32>,
     total: i32,
 }
 
@@ -147,7 +141,7 @@ fn roll_result(rolls: &[RollWithTime]) -> El<Msg> {
                     result
                         .rolls
                         .iter()
-                        .map(|r| format!("{}", r.value))
+                        .map(|r| format!("{}", r))
                         .collect::<Vec<String>>()
                         .join(", ")
                 ],
