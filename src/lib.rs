@@ -1,4 +1,5 @@
 use futures::Future;
+use graphql_client::{GraphQLQuery, Response};
 use js_sys::Date;
 use seed::prelude::*;
 use seed::{
@@ -20,6 +21,14 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 const BACKEND_URL: &str = "http://localhost:3000";
 #[cfg(not(debug_assertions))]
 const BACKEND_URL: &str = "https://morning-eyrie-18336.herokuapp.com";
+
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "schema.json",
+    query_path = "src/graphql/roll.graphql",
+    response_derives = "Clone, Debug"
+)]
+struct RollQuery;
 
 #[derive(Clone, Debug, Deserialize, Serialize)]
 struct RollInstruction {
@@ -52,13 +61,13 @@ struct RollResult {
 
 #[derive(Debug)]
 struct RollWithTime {
-    result: RollResult,
+    result: Option<roll_query::ResponseData>,
     time: Date,
 }
 
 // Model
 struct Model {
-    error: Option<String>,
+    error: Option<fetch::FailReason>,
     form: RollInstruction,
     rolls: Vec<RollWithTime>,
 }
@@ -84,7 +93,8 @@ enum Msg {
     ChangeModifier(String),
     ChangeNum(String),
     GetRoll(Event),
-    ReceiveRoll(Box<fetch::FetchObject<RollResult>>),
+    ReceiveRoll(Option<roll_query::ResponseData>),
+    ReceiveError(Option<fetch::FailReason>),
 }
 
 fn update(msg: Msg, model: &mut Model, orders: &mut Orders<Msg>) {
@@ -96,23 +106,30 @@ fn update(msg: Msg, model: &mut Model, orders: &mut Orders<Msg>) {
         Msg::ChangeNum(val) => model.form.num = val.parse().unwrap_or(model.form.num),
         Msg::GetRoll(event) => {
             event.prevent_default();
-            orders.skip().perform_cmd(get_roll(&model.form));
+            orders.skip().perform_cmd(get_roll(roll_query::Variables {
+                num: model.form.num.into(),
+                die: model.form.die.into(),
+                modifier: model.form.modifier.into(),
+            }));
         }
-        Msg::ReceiveRoll(fetch_object) => match fetch_object.response() {
-            Ok(response) => model.rolls.push(RollWithTime {
-                result: response.data,
-                time: Date::new_0(),
-            }),
-            Err(fail_reason) => model.error = Some(format!("Error: {:#?}", fail_reason)),
-        },
+        Msg::ReceiveRoll(result) => model.rolls.push(RollWithTime {
+            result,
+            time: Date::new_0(),
+        }),
+        Msg::ReceiveError(error) => model.error = error,
     }
 }
 
-fn get_roll(instruction: &RollInstruction) -> impl Future<Item = Msg, Error = Msg> {
-    Request::new(format!("{}/roll/", BACKEND_URL))
+fn get_roll(variables: roll_query::Variables) -> impl Future<Item = Msg, Error = Msg> {
+    Request::new(format!("{}/graphql", BACKEND_URL))
         .method(Method::Post)
-        .body_json(instruction)
-        .fetch_json(|r| Msg::ReceiveRoll(Box::new(r)))
+        .body_json(&RollQuery::build_query(variables))
+        .fetch_json(
+            |r: fetch::FetchObject<Response<roll_query::ResponseData>>| match r.response() {
+                Ok(response) => Msg::ReceiveRoll(response.data.data),
+                Err(fail_reason) => Msg::ReceiveError(Some(fail_reason)),
+            },
+        )
 }
 
 fn dice_option(form: &RollInstruction, die: i32) -> El<Msg> {
@@ -128,29 +145,33 @@ fn roll_result(rolls: &[RollWithTime]) -> El<Msg> {
         .iter()
         .rev()
         .map(|RollWithTime { result, time }| {
-            div![
-                class!["columns", "flex-centered", "py-2"],
+            if let Some(r) = result {
                 div![
-                    class!["column", "col-6", "h5", "text-right"],
-                    format!("{}: ", result.instruction),
-                    strong![class!["text-large"], format!("{}", result.total)],
-                ],
-                div![
-                    class!["column", "col-6"],
-                    strong!["Rolls: "],
-                    result
-                        .rolls
-                        .iter()
-                        .map(|r| format!("{}", r))
-                        .collect::<Vec<String>>()
-                        .join(", ")
-                ],
-                div![
-                    class!["column", "col-12", "text-center"],
-                    style! {"font-size" => "75%";},
-                    String::from(time.to_locale_string("default", &JsValue::UNDEFINED))
+                    class!["columns", "flex-centered", "py-2"],
+                    div![
+                        class!["column", "col-6", "h5", "text-right"],
+                        format!("{:?}: ", r.roll.instruction),
+                        strong![class!["text-large"], format!("{}", r.roll.total)],
+                    ],
+                    div![
+                        class!["column", "col-6"],
+                        strong!["Rolls: "],
+                        r.roll
+                            .rolls
+                            .iter()
+                            .map(|r| format!("{}", r))
+                            .collect::<Vec<String>>()
+                            .join(", ")
+                    ],
+                    div![
+                        class!["column", "col-12", "text-center"],
+                        style! {"font-size" => "75%";},
+                        String::from(time.to_locale_string("default", &JsValue::UNDEFINED))
+                    ]
                 ]
-            ]
+            } else {
+                empty()
+            }
         })
         .collect();
     div![class!["container"], roll_view]
@@ -162,7 +183,7 @@ fn view(Model { error, form, rolls }: &Model) -> El<Msg> {
         class!["container", "grid-lg", "p-2"],
         h2![class!["pt-2", "text-center"], "Dice Roller"],
         match error {
-            Some(e) => div![class!["toast", "toast-error"], e],
+            Some(e) => div![class!["toast", "toast-error"], format!("{:#?}", e)],
             None => empty![],
         },
         form![

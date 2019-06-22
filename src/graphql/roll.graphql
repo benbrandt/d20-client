@@ -1,0 +1,11 @@
+query RollQuery($num: Int!, $die: Int!, $modifier: Int!) {
+  roll(num: $num, die: $die, modifier: $modifier) {
+    instruction {
+      num
+      die
+      modifier
+    }
+    rolls
+    total
+  }
+}
