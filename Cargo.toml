@@ -8,12 +8,14 @@ readme = "./README.md"
 repository = "https://github.com/benbrandt/d20-client"
 version = "0.1.0"
 edition = "2018"
+include = ["src/**/*", "Cargo.toml"]
 
 [lib]
 crate-type = ["cdylib"]
 
 [dependencies]
 futures = "0.1"
+graphql_client = { version = "0.8", features = ["web"] }
 js-sys = "0.3"
 seed = "0.3"
 serde = { version = "1", features = ['derive'] }
