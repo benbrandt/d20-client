@@ -1442,16 +1442,16 @@ atob@^2.1.1:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-auth0-js@^9.10.4:
-  version "9.10.4"
-  resolved "https://registry.yarnpkg.com/auth0-js/-/auth0-js-9.10.4.tgz#1cccfa2bdb3ea1d001805f22a31c0a40c6ec9480"
-  integrity sha512-FKwwA0E9NDrn/MxCzeftA5wx6YCos9wINhuvXeFHDdx+Lis7ykR46kBXJF4+dYjDdC5QhQ7W0cAp6bBS5gS75Q==
+auth0-js@^9.11.0:
+  version "9.11.0"
+  resolved "https://registry.yarnpkg.com/auth0-js/-/auth0-js-9.11.0.tgz#f2632e4eaa44e737a5670043ba566a8fbecebb96"
+  integrity sha512-a2aIys52TGIktSXUaRmajogCuqww1hthLGG9/1KpuLN27CLimwEjcHt3paTZdJBLdyqIxYzBPcxFqqUe/YgOWQ==
   dependencies:
     base64-js "^1.2.0"
-    idtoken-verifier "^1.2.0"
+    idtoken-verifier "^1.4.0"
     js-cookie "^2.2.0"
     qs "^6.4.0"
-    superagent "^3.8.2"
+    superagent "^3.8.3"
     url-join "^4.0.0"
     winchan "^0.2.1"
 
@@ -4042,7 +4042,7 @@ icss-utils@^4.0.0, icss-utils@^4.1.1:
   dependencies:
     postcss "^7.0.14"
 
-idtoken-verifier@^1.2.0:
+idtoken-verifier@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/idtoken-verifier/-/idtoken-verifier-1.4.0.tgz#55ad5670b5e9a6a3e2ef808621a234d2064719c5"
   integrity sha512-644kKg9712hhEkyrRPncBGWKHd9pEh6b3r9DtkQ5zlqgoaX6YtsZGghNLXFVF+541MnwTLjFQqaDDmdQvT4qCQ==
@@ -7636,7 +7636,7 @@ stylehacks@^4.0.0:
     postcss "^7.0.0"
     postcss-selector-parser "^3.0.0"
 
-superagent@^3.8.2:
+superagent@^3.8.3:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/superagent/-/superagent-3.8.3.tgz#460ea0dbdb7d5b11bc4f78deba565f86a178e128"
   integrity sha512-GLQtLMCoEIK4eDv6OGtkOoSMt3D+oq0y3dsxMuYuDvaNUvuT8eFBuLmfR0iYYzHC1e8hpzC6ZsxbuP6DIalMFA==
