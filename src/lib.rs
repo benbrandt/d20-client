@@ -1,15 +1,13 @@
 use futures::Future;
 use graphql_client::{GraphQLQuery, Response};
-use js_sys::Date;
+use js_sys::{Date, Promise};
 use seed::prelude::*;
 use seed::{
-    attrs, button, class, div, empty, fetch, form, h2, input, option, select, span, strong, style,
-    Method, Request,
+    attrs, button, class, div, empty, fetch, form, header, input, option, section, select, span,
+    strong, style, Method, Request,
 };
 use serde::{Deserialize, Serialize};
-use std::fmt;
 use wasm_bindgen::JsValue;
-use web_sys::Event;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -30,33 +28,11 @@ const BACKEND_URL: &str = "https://morning-eyrie-18336.herokuapp.com";
 )]
 struct RollQuery;
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
-struct RollInstruction {
+#[derive(Debug, Deserialize, Serialize)]
+struct Form {
     num: i32,
     die: i32,
     modifier: i32,
-}
-
-impl fmt::Display for RollInstruction {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}d{}", self.num, self.die)?;
-        if self.modifier != 0 {
-            write!(
-                f,
-                " {} {}",
-                if self.modifier > 0 { "+" } else { "-" },
-                self.modifier
-            )?;
-        }
-        Ok(())
-    }
-}
-
-#[derive(Clone, Deserialize, Debug)]
-struct RollResult {
-    instruction: RollInstruction,
-    rolls: Vec<i32>,
-    total: i32,
 }
 
 #[derive(Debug)]
@@ -67,16 +43,18 @@ struct RollWithTime {
 
 // Model
 struct Model {
-    error: Option<fetch::FailReason>,
-    form: RollInstruction,
+    authentication: bool,
+    error: Option<String>,
+    form: Form,
     rolls: Vec<RollWithTime>,
 }
 
 impl Default for Model {
     fn default() -> Self {
         Self {
+            authentication: false,
             error: None,
-            form: RollInstruction {
+            form: Form {
                 num: 1,
                 die: 20,
                 modifier: 0,
@@ -87,25 +65,34 @@ impl Default for Model {
 }
 
 // Update
-#[derive(Clone)]
+#[derive(Clone, Deserialize)]
 enum Msg {
+    Authenticated(bool),
     ChangeDie(String),
     ChangeModifier(String),
     ChangeNum(String),
-    GetRoll(Event),
+    GetRoll,
+    Login,
+    Logout,
     ReceiveRoll(Option<roll_query::ResponseData>),
-    ReceiveError(Option<fetch::FailReason>),
+    ReceiveError(Option<String>),
 }
 
 fn update(msg: Msg, model: &mut Model, orders: &mut Orders<Msg>) {
     match msg {
+        Msg::Authenticated(authentication) => model.authentication = authentication,
         Msg::ChangeDie(val) => model.form.die = val.parse().unwrap_or(model.form.die),
         Msg::ChangeModifier(val) => {
             model.form.modifier = val.parse().unwrap_or(model.form.modifier)
         }
         Msg::ChangeNum(val) => model.form.num = val.parse().unwrap_or(model.form.num),
-        Msg::GetRoll(event) => {
-            event.prevent_default();
+        Msg::Login => {
+            d20Login();
+        }
+        Msg::Logout => {
+            d20Logout();
+        }
+        Msg::GetRoll => {
             orders.skip().perform_cmd(get_roll(roll_query::Variables {
                 num: model.form.num.into(),
                 die: model.form.die.into(),
@@ -127,12 +114,12 @@ fn get_roll(variables: roll_query::Variables) -> impl Future<Item = Msg, Error =
         .fetch_json(
             |r: fetch::FetchObject<Response<roll_query::ResponseData>>| match r.response() {
                 Ok(response) => Msg::ReceiveRoll(response.data.data),
-                Err(fail_reason) => Msg::ReceiveError(Some(fail_reason)),
+                Err(fail_reason) => Msg::ReceiveError(Some(format!("{:#?}", fail_reason))),
             },
         )
 }
 
-fn dice_option(form: &RollInstruction, die: i32) -> El<Msg> {
+fn dice_option(form: &Form, die: i32) -> El<Msg> {
     let mut attributes = attrs! {At::Value => die;};
     if form.die == die {
         attributes.add(At::Selected, "");
@@ -178,16 +165,46 @@ fn roll_result(rolls: &[RollWithTime]) -> El<Msg> {
 }
 
 // View
-fn view(Model { error, form, rolls }: &Model) -> El<Msg> {
+fn view(
+    Model {
+        authentication,
+        error,
+        form,
+        rolls,
+    }: &Model,
+) -> El<Msg> {
     div![
         class!["container", "grid-lg", "p-2"],
-        h2![class!["pt-2", "text-center"], "Dice Roller"],
+        header![
+            class!["navbar p-2"],
+            section![
+                class!["navbar-section"],
+                span![class!["navbar-brand mr-2"], "Dice Roller"],
+                button![
+                    simple_ev(
+                        Ev::Click,
+                        if *authentication {
+                            Msg::Logout
+                        } else {
+                            Msg::Login
+                        }
+                    ),
+                    attrs! {
+                        At::Class => "btn btn-link btn-sm";
+                    },
+                    if *authentication { "Log in" } else { "Log out" },
+                ],
+            ]
+        ],
         match error {
-            Some(e) => div![class!["toast", "toast-error"], format!("{:#?}", e)],
+            Some(e) => div![class!["toast", "toast-error"], e],
             None => empty![],
         },
         form![
-            raw_ev(Ev::Submit, Msg::GetRoll),
+            raw_ev(Ev::Submit, |event| {
+                event.prevent_default();
+                Msg::GetRoll
+            }),
             class!["p-2"],
             div![
                 class!["input-group"],
@@ -248,6 +265,9 @@ fn view(Model { error, form, rolls }: &Model) -> El<Msg> {
 pub fn render() {
     set_panic_hook();
     seed::App::build(Model::default(), update, view)
+        // `trigger_update_handler` processes JS event
+        // and forwards it to `update` function.
+        .window_events(|_| vec![trigger_update_handler()])
         .finish()
         .run();
 }
@@ -257,6 +277,12 @@ fn set_panic_hook() {
     // `set_panic_hook` function to get better error messages if we ever panic.
     #[cfg(feature = "console_error_panic_hook")]
     console_error_panic_hook::set_once();
+}
+
+#[wasm_bindgen]
+extern "C" {
+    fn d20Login() -> Promise;
+    fn d20Logout();
 }
 
 #[cfg(test)]

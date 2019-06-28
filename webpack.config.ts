@@ -12,6 +12,7 @@ import PreloadWebpackPlugin from "preload-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import webpack from "webpack";
 import WorkboxWebpackPlugin from "workbox-webpack-plugin";
+import noopServiceWorkerMiddleware from "./js/noopServiceWorkerMiddleware";
 
 const dist = path.resolve(__dirname, "dist");
 
@@ -51,6 +52,9 @@ const config: webpack.Configuration = {
     chunkFilename: `[name].${isEnvProd ? "[contenthash]." : ""}js`
   },
   devServer: {
+    before(app) {
+      app.use(noopServiceWorkerMiddleware());
+    },
     compress: true,
     contentBase: dist,
     hot: true,
