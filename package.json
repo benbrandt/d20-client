@@ -103,7 +103,7 @@
   },
   "dependencies": {
     "@sentry/browser": "^5.4.2",
-    "auth0-js": "^9.11.0",
+    "auth0-js": "^9.11.1",
     "bulma": "^0.7.5",
     "fast-text-encoding": "^1.0.0",
     "register-service-worker": "^1.6.2"
