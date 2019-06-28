@@ -4,3 +4,4 @@ bin
 pkg
 target
 wasm-pack.log
+yarn-error.log
