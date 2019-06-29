@@ -44,7 +44,16 @@
       "plugin:import/typescript",
       "plugin:prettier/recommended",
       "prettier/@typescript-eslint"
-    ]
+    ],
+    "rules": {
+      "@typescript-eslint/camelcase": [
+        "error",
+        {
+          "properties": "never",
+          "ignoreDestructuring": true
+        }
+      ]
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
