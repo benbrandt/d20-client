@@ -27,14 +27,14 @@ let auth0: Auth0Client;
 async function checkAuth(): Promise<boolean> {
   const isAuthenticated = await auth0.isAuthenticated();
   triggerUpdate("Authenticated", isAuthenticated);
-  if (isAuthenticated) {
-    const token = await auth0.getTokenSilently();
-    const user = await auth0.getUser();
-  }
+  //if (isAuthenticated) {
+  //  const token = await auth0.getTokenSilently();
+  //  const user = await auth0.getUser();
+  //}
   return isAuthenticated;
 }
 
-async function authenticate() {
+async function authenticate(): Promise<void> {
   auth0 = await createAuth0Client({
     domain: "d20.auth0.com",
     client_id: "IjRu7XqVRtUIEOjwhzC7Bbe2P1zRVhPC"
@@ -53,13 +53,13 @@ async function authenticate() {
   }
 }
 
-async function login() {
+async function login(): Promise<void> {
   await auth0.loginWithRedirect({
     redirect_uri: window.location.origin
   });
 }
 
-function logout() {
+function logout(): Promise<void> {
   auth0.logout({
     returnTo: window.location.origin
   });
