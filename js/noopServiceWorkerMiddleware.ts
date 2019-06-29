@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 
-export default function createNoopServiceWorkerMiddleware() {
-  return function noopServiceWorkerMiddleware(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {
+export default function createNoopServiceWorkerMiddleware(): (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => void {
+  return function noopServiceWorkerMiddleware(req, res, next): void {
     if (req.url === "/service-worker.js") {
       res.setHeader("Content-Type", "text/javascript");
       res.send(

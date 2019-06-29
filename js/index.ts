@@ -59,7 +59,7 @@ async function login(): Promise<void> {
   });
 }
 
-function logout(): Promise<void> {
+function logout(): void {
   auth0.logout({
     returnTo: window.location.origin
   });
