@@ -14,12 +14,8 @@ before_install:
   - rustup component add rustfmt
 
 cache:
-  - directories:
-      - $HOME/.cargo
-      - $HOME/.cache/yarn
-
-before_cache:
-  - rm -rf $HOME/.cargo/registry
+  - cargo
+  - yarn
 
 script:
   - yarn --frozen-lockfile
