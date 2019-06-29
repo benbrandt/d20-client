@@ -111,16 +111,16 @@ fn get_roll(variables: roll_query::Variables) -> impl Future<Item = Msg, Error =
     Request::new(format!("{}/graphql", BACKEND_URL))
         .method(Method::Post)
         .body_json(&RollQuery::build_query(variables))
-        .fetch_json(
-            |r: fetch::FetchObject<Response<roll_query::ResponseData>>| match r.response() {
-                Ok(response) => Msg::ReceiveRoll(response.data.data),
+        .fetch_json_data(
+            |r: fetch::ResponseDataResult<Response<roll_query::ResponseData>>| match r {
+                Ok(response) => Msg::ReceiveRoll(response.data),
                 Err(fail_reason) => Msg::ReceiveError(Some(format!("{:#?}", fail_reason))),
             },
         )
 }
 
 fn dice_option(form: &Form, die: i32) -> El<Msg> {
-    let mut attributes = attrs! {At::Value => die;};
+    let mut attributes = attrs! {At::Value => die};
     if form.die == die {
         attributes.add(At::Selected, "");
     }
@@ -189,9 +189,7 @@ fn view(
                             Msg::Login
                         }
                     ),
-                    attrs! {
-                        At::Class => "btn btn-link btn-sm";
-                    },
+                    class!["btn", "btn-link", "btn-sm"],
                     if *authentication { "Log in" } else { "Log out" },
                 ],
             ]
@@ -211,23 +209,23 @@ fn view(
                 span![class!["input-group-addon"], "#"],
                 input![
                     attrs! {
-                        At::Class => "form-input";
-                        At::Id => "num";
-                        At::Min => 1;
-                        At::Max => 99;
-                        At::Name => "num";
-                        At::Type => "number";
-                        At::Value => form.num;
+                        At::Class => "form-input",
+                        At::Id => "num",
+                        At::Min => 1,
+                        At::Max => 99,
+                        At::Name => "num",
+                        At::Type => "number",
+                        At::Value => form.num,
                     },
                     input_ev(Ev::Input, Msg::ChangeNum),
                 ],
                 span![class!["input-group-addon"], "d"],
                 select![
                     attrs! {
-                        At::Class => "form-select";
-                        At::Id => "die";
-                        At::Name => "die";
-                        At::Value => form.die;
+                        At::Class => "form-select",
+                        At::Id => "die",
+                        At::Name => "die",
+                        At::Value => form.die,
                     },
                     input_ev(Ev::Input, Msg::ChangeDie),
                     dice_option(form, 4),
@@ -241,17 +239,17 @@ fn view(
                 span![class!["input-group-addon"], "+"],
                 input![
                     attrs! {
-                        At::Class => "form-input";
-                        At::Id => "modifier";
-                        At::Name => "modifier";
-                        At::PlaceHolder => "Modifier";
-                        At::Type => "number";
-                        At::Value => form.modifier;
+                        At::Class => "form-input",
+                        At::Id => "modifier",
+                        At::Name => "modifier",
+                        At::Placeholder => "Modifier",
+                        At::Type => "number",
+                        At::Value => form.modifier,
                     },
                     input_ev(Ev::Input, Msg::ChangeModifier),
                 ],
                 button![
-                    attrs! {At::Class => "btn btn-primary input-group-btn"; At::Type => "submit" },
+                    attrs! {At::Class => "btn btn-primary input-group-btn",At::Type => "submit" },
                     "Roll"
                 ]
             ]
