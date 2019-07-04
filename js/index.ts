@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import "spectre.css/src/spectre.scss";
+import "fast-text-encoding";
 import createAuth0Client from "@auth0/auth0-spa-js";
 import Auth0Client from "@auth0/auth0-spa-js/dist/typings/Auth0Client";
 import * as Sentry from "@sentry/browser";
