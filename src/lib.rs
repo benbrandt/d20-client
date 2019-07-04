@@ -6,7 +6,7 @@ use seed::{
     attrs, button, class, div, empty, error, fetch, form, header, input, option, section, select,
     span, strong, style, Method, Request,
 };
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize};
 use wasm_bindgen::JsValue;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -28,11 +28,11 @@ const BACKEND_URL: &str = "https://morning-eyrie-18336.herokuapp.com";
 )]
 struct RollQuery;
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug)]
 struct Form {
-    num: i32,
-    die: i32,
-    modifier: i32,
+    num: String,
+    die: String,
+    modifier: String,
 }
 
 #[derive(Debug)]
@@ -55,9 +55,9 @@ impl Default for Model {
             authentication: false,
             error: None,
             form: Form {
-                num: 1,
-                die: 20,
-                modifier: 0,
+                num: "1".into(),
+                die: "20".into(),
+                modifier: "0".into(),
             },
             rolls: vec![],
         }
@@ -81,11 +81,9 @@ enum Msg {
 fn update(msg: Msg, model: &mut Model, orders: &mut Orders<Msg>) {
     match msg {
         Msg::Authenticated(authentication) => model.authentication = authentication,
-        Msg::ChangeDie(val) => model.form.die = val.parse().unwrap_or(model.form.die),
-        Msg::ChangeModifier(val) => {
-            model.form.modifier = val.parse().unwrap_or(model.form.modifier)
-        }
-        Msg::ChangeNum(val) => model.form.num = val.parse().unwrap_or(model.form.num),
+        Msg::ChangeDie(val) => model.form.die = val,
+        Msg::ChangeModifier(val) => model.form.modifier = val,
+        Msg::ChangeNum(val) => model.form.num = val,
         Msg::Login => {
             d20Login();
         }
@@ -94,9 +92,9 @@ fn update(msg: Msg, model: &mut Model, orders: &mut Orders<Msg>) {
         }
         Msg::GetRoll => {
             orders.skip().perform_cmd(get_roll(roll_query::Variables {
-                num: model.form.num.into(),
-                die: model.form.die.into(),
-                modifier: model.form.modifier.into(),
+                num: model.form.num.parse().unwrap_or_default(),
+                die: model.form.die.parse().unwrap_or_default(),
+                modifier: model.form.modifier.parse().unwrap_or_default(),
             }));
         }
         Msg::ReceiveRoll(result) => model.rolls.push(RollWithTime {
@@ -122,7 +120,7 @@ fn get_roll(variables: roll_query::Variables) -> impl Future<Item = Msg, Error =
         )
 }
 
-fn dice_option(form: &Form, die: i32) -> El<Msg> {
+fn dice_option(form: &Form, die: &str) -> El<Msg> {
     let mut attributes = attrs! {At::Value => die};
     if form.die == die {
         attributes.add(At::Selected, "");
@@ -140,7 +138,7 @@ fn roll_result(rolls: &[RollWithTime]) -> El<Msg> {
                     class!["columns", "flex-centered", "py-2"],
                     div![
                         class!["column", "col-6", "h5", "text-right"],
-                        format!("{:?}: ", r.roll.instruction),
+                        format!("{}: ", r.roll.instruction),
                         strong![class!["text-large"], format!("{}", r.roll.total)],
                     ],
                     div![
@@ -231,13 +229,13 @@ fn view(
                         At::Value => form.die,
                     },
                     input_ev(Ev::Input, Msg::ChangeDie),
-                    dice_option(form, 4),
-                    dice_option(form, 6),
-                    dice_option(form, 8),
-                    dice_option(form, 10),
-                    dice_option(form, 12),
-                    dice_option(form, 20),
-                    dice_option(form, 100),
+                    dice_option(form, "4"),
+                    dice_option(form, "6"),
+                    dice_option(form, "8"),
+                    dice_option(form, "10"),
+                    dice_option(form, "12"),
+                    dice_option(form, "20"),
+                    dice_option(form, "100"),
                 ],
                 span![class!["input-group-addon"], "+"],
                 input![
