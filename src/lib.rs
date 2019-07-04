@@ -3,8 +3,8 @@ use graphql_client::{GraphQLQuery, Response};
 use js_sys::{Date, Promise};
 use seed::prelude::*;
 use seed::{
-    attrs, button, class, div, empty, fetch, form, header, input, option, section, select, span,
-    strong, style, Method, Request,
+    attrs, button, class, div, empty, error, fetch, form, header, input, option, section, select,
+    span, strong, style, Method, Request,
 };
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::JsValue;
@@ -75,7 +75,7 @@ enum Msg {
     Login,
     Logout,
     ReceiveRoll(Option<roll_query::ResponseData>),
-    ReceiveError(Option<String>),
+    ReceiveError,
 }
 
 fn update(msg: Msg, model: &mut Model, orders: &mut Orders<Msg>) {
@@ -103,7 +103,7 @@ fn update(msg: Msg, model: &mut Model, orders: &mut Orders<Msg>) {
             result,
             time: Date::new_0(),
         }),
-        Msg::ReceiveError(error) => model.error = error,
+        Msg::ReceiveError => model.error = Some("Request failed".into()),
     }
 }
 
@@ -114,7 +114,10 @@ fn get_roll(variables: roll_query::Variables) -> impl Future<Item = Msg, Error =
         .fetch_json_data(
             |r: fetch::ResponseDataResult<Response<roll_query::ResponseData>>| match r {
                 Ok(response) => Msg::ReceiveRoll(response.data),
-                Err(fail_reason) => Msg::ReceiveError(Some(format!("{:#?}", fail_reason))),
+                Err(fail_reason) => {
+                    error(fail_reason);
+                    Msg::ReceiveError
+                }
             },
         )
 }
