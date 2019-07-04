@@ -71,12 +71,15 @@ window.d20Login = login;
 // @ts-ignore
 window.d20Logout = logout;
 
-// @ts-ignore
-// eslint-disable-next-line import/no-unresolved
-import("../pkg").then((module): void => {
+async function startup(): Promise<void> {
+  // @ts-ignore
+  // eslint-disable-next-line import/no-unresolved
+  const module = await import("../pkg");
   module.render();
-  authenticate();
-});
+  await authenticate();
+}
+
+startup();
 
 register("/service-worker.js", {
   ready(): void {
