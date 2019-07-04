@@ -17,6 +17,10 @@ cache:
   - cargo
   - yarn
 
+before_cache:
+  - rm -rf "$TRAVIS_HOME/.cargo/registry/src"
+  - rm -rf target
+
 script:
   - yarn --frozen-lockfile
   - yarn lint
