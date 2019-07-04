@@ -6,7 +6,7 @@ use seed::{
     attrs, button, class, div, empty, error, fetch, form, header, input, option, section, select,
     span, strong, style, Method, Request,
 };
-use serde::{Deserialize};
+use serde::Deserialize;
 use wasm_bindgen::JsValue;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
