@@ -190,7 +190,7 @@ fn view(
                         }
                     ),
                     class!["btn", "btn-link", "btn-sm"],
-                    if *authentication { "Log in" } else { "Log out" },
+                    if *authentication { "Log out" } else { "Log in" },
                 ],
             ]
         ],
