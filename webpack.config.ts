@@ -139,8 +139,6 @@ const config: webpack.Configuration = {
     isEnvProd &&
       new WorkboxWebpackPlugin.GenerateSW({
         clientsClaim: true,
-        // @ts-ignore
-        dontCacheBustURLsMatching: /(\.\w{20}\.|\w{20}\.module\.wasm)/,
         importWorkboxFrom: "local",
         navigateFallback: "/index.html",
         navigateFallbackBlacklist: [
