@@ -70,7 +70,7 @@
     "@types/terser-webpack-plugin": "^1.2.1",
     "@types/webpack": "^4.4.34",
     "@types/webpack-bundle-analyzer": "^2.13.1",
-    "@types/webpack-dev-server": "^3.1.6",
+    "@types/webpack-dev-server": "^3.1.7",
     "@types/workbox-webpack-plugin": "^4.1.0",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",
