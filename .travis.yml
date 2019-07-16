@@ -12,19 +12,27 @@ before_install:
   - export PATH="$HOME/.yarn/bin:$PATH"
   - rustup component add clippy
   - rustup component add rustfmt
+  # Cargo tools
+  - cargo audit --version | grep $(curl 'https://crates.io/api/v1/crates/cargo-audit' | jq '.crate.max_version' | tr -d '"') || cargo install cargo-audit --force
+  - cargo-sweep --version | grep $(curl 'https://crates.io/api/v1/crates/cargo-sweep' | jq '.crate.max_version' | tr -d '"') || cargo install cargo-sweep --force
 
 cache:
   - cargo
   - yarn
 
+before_script:
+  - cargo sweep --stamp
+
 before_cache:
   - rm -rf "$TRAVIS_HOME/.cargo/registry/src"
-  - rm -rf target
+  - cargo sweep --file
 
 script:
   - yarn --frozen-lockfile
+  - yarn audit
   - yarn lint
-  - cargo fmt -- --check
+  - cargo audit
+  - cargo fmt --all -- --check
   - cargo check
   - cargo clippy --all-targets --all-features -- -D warnings
   - yarn test
