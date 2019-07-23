@@ -2,15 +2,15 @@
 # yarn lockfile v1
 
 
-"@auth0/auth0-spa-js@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@auth0/auth0-spa-js/-/auth0-spa-js-1.1.0.tgz#99a672e81f61baa31bed8a3ce28b9d64bbbb34a5"
-  integrity sha512-TT2acZKSNrYJkm6w4p+xcghfkPAQwi8oILb32ZjxAGQpzSJZmOtCxxr2/9unW+1KKRtVlDFXYGUV+qMvjyj4Tg==
+"@auth0/auth0-spa-js@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@auth0/auth0-spa-js/-/auth0-spa-js-1.1.1.tgz#8189d3fd8c11afb01fa64555e9d74b4ba935ff76"
+  integrity sha512-cBVWk4f/DNH83f7yMaWAhozIQUXdLXOluqsRuqe0cbinpP009MoC/bjMAeBfWbH6tdX/vOToUwQOcXytuVQInA==
   dependencies:
     es-cookie "^1.2.0"
     fast-text-encoding "^1.0.0"
-    qs "^6.5.1"
-    ts-polyfill "^3.0.1"
+    qs "^6.7.0"
+    ts-polyfill "^3.5.1"
     unfetch "^4.1.0"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.5.5":
@@ -6645,7 +6645,7 @@ q@^1.1.2:
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
 
-qs@6.7.0, qs@^6.5.1:
+qs@6.7.0, qs@^6.7.0:
   version "6.7.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
   integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
@@ -7905,7 +7905,7 @@ ts-node@^8.3.0:
     source-map-support "^0.5.6"
     yn "^3.0.0"
 
-ts-polyfill@^3.0.1:
+ts-polyfill@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/ts-polyfill/-/ts-polyfill-3.5.1.tgz#2b550f4e405b78bb36c68415f203e5e11de1d8f1"
   integrity sha512-IrwtFfM7ryDo3bM7c23KRXVaTCKy7Lwfl1hXkuorpBnvSffSuoD474qBPX6dggH2/H2C10zaYYmZiMia2oDJUw==
