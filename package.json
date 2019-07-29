@@ -78,7 +78,7 @@
     "@wasm-tool/wasm-pack-plugin": "^1.0.0",
     "babel-loader": "^8.0.6",
     "binaryen": "^87.0.0",
-    "caniuse-lite": "^1.0.30000985",
+    "caniuse-lite": "^1.0.30000986",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.0.4",
     "core-js": "^3.1.4",
