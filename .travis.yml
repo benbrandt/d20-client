@@ -1,4 +1,5 @@
 language: rust
+dist: bionic
 
 branches:
   only:
@@ -14,18 +15,14 @@ before_install:
   - rustup component add rustfmt
   # Cargo tools
   - cargo audit --version | grep $(curl 'https://crates.io/api/v1/crates/cargo-audit' | jq '.crate.max_version' | tr -d '"') || cargo install cargo-audit --force
-  - cargo-sweep --version | grep $(curl 'https://crates.io/api/v1/crates/cargo-sweep' | jq '.crate.max_version' | tr -d '"') || cargo install cargo-sweep --force
 
 cache:
   - cargo
   - yarn
 
-before_script:
-  - cargo sweep --stamp
-
 before_cache:
   - rm -rf "$TRAVIS_HOME/.cargo/registry/src"
-  - cargo sweep --file
+  - rm -rf target
 
 script:
   - yarn --frozen-lockfile
