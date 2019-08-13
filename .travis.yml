@@ -14,6 +14,7 @@ before_install:
   - rustup component add rustfmt
   # Cargo tools
   - cargo audit --version | grep $(curl 'https://crates.io/api/v1/crates/cargo-audit' | jq '.crate.max_version' | tr -d '"') || cargo install cargo-audit --force
+  - cargo-sweep --version | grep $(curl 'https://crates.io/api/v1/crates/cargo-sweep' | jq '.crate.max_version' | tr -d '"') || cargo install cargo-sweep --force
 
 cache:
   - cargo
@@ -21,7 +22,10 @@ cache:
 
 before_cache:
   - rm -rf "$TRAVIS_HOME/.cargo/registry/src"
-  - rm -rf target
+  - cargo sweep --file
+
+before_script:
+  - cargo sweep --stamp
 
 script:
   - yarn --frozen-lockfile
