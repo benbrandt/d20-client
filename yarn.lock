@@ -1628,10 +1628,10 @@ binary-extensions@^1.0.0:
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-1.13.1.tgz#598afe54755b2868a5330d2aff9d4ebb53209b65"
   integrity sha512-Un7MIEDdUC5gNpcGDV97op1Ywk748MpHcFTHoYs6qnj1Z3j7I53VG3nwZhKzoBZmbdRNnb6WRdFlwl7tSDuZGw==
 
-binaryen@^88.0.0:
-  version "88.0.0"
-  resolved "https://registry.yarnpkg.com/binaryen/-/binaryen-88.0.0.tgz#0f7f4a29e92bd6c1f0e38e8fae97992f7beedf55"
-  integrity sha512-C+rLIIAfhuZvKAyDQVqqz4tTIxQqsynWawFulvEbWrqZhscFO0RMAhmL0isUYzuJ4RPlExetI2nDDVZoRakPHg==
+binaryen@^89.0.0:
+  version "89.0.0"
+  resolved "https://registry.yarnpkg.com/binaryen/-/binaryen-89.0.0.tgz#ae5044422fddae3d5a117d62da5ceca46ff8b914"
+  integrity sha512-yvTTdiCzWUQb3NHcdpiyhQOTUpTw8l+YcjvDQ1+R4e2jr3VQspMScoQitOTPC6mftXkEP67x5S14kCApNX/X1Q==
 
 block-stream@*:
   version "0.0.9"
