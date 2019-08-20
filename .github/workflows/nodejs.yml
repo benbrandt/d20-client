@@ -1,0 +1,43 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    
+    - name: Use Node.js 10.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+    
+    - name: Setup
+      run: |
+        curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh -s -- -f
+        curl -o- -L https://yarnpkg.com/install.sh | bash -s
+        rustup component add clippy
+        rustup component add rustfmt
+        cargo install cargo-audit
+        
+    - name: Install
+      run: |
+        yarn --frozen-lockfile
+        yarn audit
+        cargo audit
+        
+    - name: Lint/Check
+      run: |
+        yarn lint
+        cargo fmt --all -- --check
+        cargo check
+        cargo clippy --all-targets --all-features -- -D warnings
+        
+    - name: Test
+      run: yarn test
+        
+    - name: Build
+      run: yarn build
