@@ -47,3 +47,4 @@ jobs:
       env:
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         NETLIFY_ACCESS_TOKEN: ${{ secrets.NETLIFY_ACCESS_TOKEN }}
+        PATH: $HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH
