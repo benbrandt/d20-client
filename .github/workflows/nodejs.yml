@@ -21,13 +21,11 @@ jobs:
         curl -o- -L https://yarnpkg.com/install.sh | bash -s
         rustup component add clippy
         rustup component add rustfmt
-        cargo install cargo-audit
         
     - name: Install
       run: |
         yarn --frozen-lockfile
         yarn audit
-        cargo audit
         
     - name: Lint/Check
       run: |
