@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, @typescript-eslint/ban-ts-ignore */
 import "spectre.css/src/spectre.scss";
 import "fast-text-encoding";
 import createAuth0Client from "@auth0/auth0-spa-js";
