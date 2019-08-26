@@ -11,8 +11,7 @@ Sentry.init({
 async function startup(): Promise<void> {
   // @ts-ignore
   // eslint-disable-next-line import/no-unresolved
-  const module = await import("../pkg");
-  module.render();
+  await import("../pkg");
 }
 
 startup();

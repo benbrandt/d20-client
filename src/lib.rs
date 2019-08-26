@@ -7,7 +7,6 @@ use seed::{
     attrs, button, class, div, empty, error, fetch, form, header, input, option, section, select,
     span, strong, style, Method, Request,
 };
-use serde::Deserialize;
 use wasm_bindgen::JsValue;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -64,7 +63,7 @@ impl Default for Model {
 }
 
 // Update
-#[derive(Clone, Deserialize)]
+#[derive(Clone)]
 enum Msg {
     ChangeDie(String),
     ChangeModifier(String),
@@ -74,7 +73,7 @@ enum Msg {
     ReceiveError,
 }
 
-fn update(msg: Msg, model: &mut Model, orders: &mut Orders<Msg>) {
+fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
     match msg {
         Msg::ChangeDie(val) => model.form.die = val,
         Msg::ChangeModifier(val) => model.form.modifier = val,
@@ -109,7 +108,7 @@ fn get_roll(variables: roll_query::Variables) -> impl Future<Item = Msg, Error =
         )
 }
 
-fn dice_option(form: &Form, die: &str) -> El<Msg> {
+fn dice_option(form: &Form, die: &str) -> Node<Msg> {
     let mut attributes = attrs! {At::Value => die};
     if form.die == die {
         attributes.add(At::Selected, "");
@@ -117,8 +116,8 @@ fn dice_option(form: &Form, die: &str) -> El<Msg> {
     option![attributes, format!("d{}", die)]
 }
 
-fn roll_result(rolls: &[RollWithTime]) -> El<Msg> {
-    let roll_view: Vec<El<Msg>> = rolls
+fn roll_result(rolls: &[RollWithTime]) -> Node<Msg> {
+    let roll_view: Vec<Node<Msg>> = rolls
         .iter()
         .rev()
         .map(|RollWithTime { result, time }| {
@@ -147,7 +146,7 @@ fn roll_result(rolls: &[RollWithTime]) -> El<Msg> {
                     ]
                 ]
             } else {
-                empty()
+                empty![]
             }
         })
         .collect();
@@ -155,7 +154,7 @@ fn roll_result(rolls: &[RollWithTime]) -> El<Msg> {
 }
 
 // View
-fn view(Model { error, form, rolls }: &Model) -> El<Msg> {
+fn view(Model { error, form, rolls }: &Model) -> impl View<Msg> {
     div![
         class!["container", "grid-lg", "p-2"],
         header![
@@ -230,10 +229,10 @@ fn view(Model { error, form, rolls }: &Model) -> El<Msg> {
 }
 
 // Called by our JS entry point
-#[wasm_bindgen]
+#[wasm_bindgen(start)]
 pub fn render() {
     set_panic_hook();
-    seed::App::build(Model::default(), update, view)
+    seed::App::build(|_, _| Model::default(), update, view)
         .finish()
         .run();
 }
