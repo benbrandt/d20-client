@@ -1,6 +1,7 @@
+#![warn(clippy::all, clippy::nursery, clippy::pedantic)]
 use futures::Future;
 use graphql_client::{GraphQLQuery, Response};
-use js_sys::{Date, Promise};
+use js_sys::Date;
 use seed::prelude::*;
 use seed::{
     attrs, button, class, div, empty, error, fetch, form, header, input, option, section, select,
@@ -43,7 +44,6 @@ struct RollWithTime {
 
 // Model
 struct Model {
-    authentication: bool,
     error: Option<String>,
     form: Form,
     rolls: Vec<RollWithTime>,
@@ -52,7 +52,6 @@ struct Model {
 impl Default for Model {
     fn default() -> Self {
         Self {
-            authentication: false,
             error: None,
             form: Form {
                 num: "1".into(),
@@ -67,29 +66,19 @@ impl Default for Model {
 // Update
 #[derive(Clone, Deserialize)]
 enum Msg {
-    Authenticated(bool),
     ChangeDie(String),
     ChangeModifier(String),
     ChangeNum(String),
     GetRoll,
-    Login,
-    Logout,
     ReceiveRoll(Option<roll_query::ResponseData>),
     ReceiveError,
 }
 
 fn update(msg: Msg, model: &mut Model, orders: &mut Orders<Msg>) {
     match msg {
-        Msg::Authenticated(authentication) => model.authentication = authentication,
         Msg::ChangeDie(val) => model.form.die = val,
         Msg::ChangeModifier(val) => model.form.modifier = val,
         Msg::ChangeNum(val) => model.form.num = val,
-        Msg::Login => {
-            d20Login();
-        }
-        Msg::Logout => {
-            d20Logout();
-        }
         Msg::GetRoll => {
             orders.skip().perform_cmd(get_roll(roll_query::Variables {
                 num: model.form.num.parse().unwrap_or_default(),
@@ -166,14 +155,7 @@ fn roll_result(rolls: &[RollWithTime]) -> El<Msg> {
 }
 
 // View
-fn view(
-    Model {
-        authentication,
-        error,
-        form,
-        rolls,
-    }: &Model,
-) -> El<Msg> {
+fn view(Model { error, form, rolls }: &Model) -> El<Msg> {
     div![
         class!["container", "grid-lg", "p-2"],
         header![
@@ -181,18 +163,6 @@ fn view(
             section![
                 class!["navbar-section"],
                 span![class!["navbar-brand mr-2"], "Dice Roller"],
-                button![
-                    simple_ev(
-                        Ev::Click,
-                        if *authentication {
-                            Msg::Logout
-                        } else {
-                            Msg::Login
-                        }
-                    ),
-                    class!["btn", "btn-link", "btn-sm"],
-                    if *authentication { "Log out" } else { "Log in" },
-                ],
             ]
         ],
         match error {
@@ -255,7 +225,7 @@ fn view(
                 ]
             ]
         ],
-        roll_result(&rolls),
+        roll_result(rolls),
     ]
 }
 
@@ -264,9 +234,6 @@ fn view(
 pub fn render() {
     set_panic_hook();
     seed::App::build(Model::default(), update, view)
-        // `trigger_update_handler` processes JS event
-        // and forwards it to `update` function.
-        .window_events(|_| vec![trigger_update_handler()])
         .finish()
         .run();
 }
@@ -276,12 +243,6 @@ fn set_panic_hook() {
     // `set_panic_hook` function to get better error messages if we ever panic.
     #[cfg(feature = "console_error_panic_hook")]
     console_error_panic_hook::set_once();
-}
-
-#[wasm_bindgen]
-extern "C" {
-    fn d20Login() -> Promise;
-    fn d20Logout();
 }
 
 #[cfg(test)]
