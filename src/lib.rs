@@ -141,7 +141,7 @@ fn roll_result(rolls: &[RollWithTime]) -> Node<Msg> {
                     ],
                     div![
                         class!["column", "col-12", "text-center"],
-                        style! {"font-size" => "75%";},
+                        style! {St::FontSize => "75%";},
                         String::from(time.to_locale_string("default", &JsValue::UNDEFINED))
                     ]
                 ]
