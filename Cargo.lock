@@ -340,7 +340,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "seed"
 version = "0.4.1"
-source = "git+https://github.com/David-OConnor/seed#9833869d62613f3d87fb13611886988160e37014"
+source = "git+https://github.com/David-OConnor/seed#b67e26efe3f110dad772e325fa0aa3b50c3b0318"
 dependencies = [
  "console_error_panic_hook 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "dbg 1.0.4 (registry+https://github.com/rust-lang/crates.io-index)",
