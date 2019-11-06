@@ -14,7 +14,7 @@ include = ["src/**/*", "Cargo.toml"]
 crate-type = ["cdylib"]
 
 [dependencies]
-futures = "0.1"
+futures = "0.3"
 graphql_client = { version = "0.8", features = ["web"] }
 js-sys = "0.3"
 seed = { git = "https://github.com/David-OConnor/seed" }
