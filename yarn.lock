@@ -2,12 +2,12 @@
 # yarn lockfile v1
 
 
-"@auth0/auth0-spa-js@^1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@auth0/auth0-spa-js/-/auth0-spa-js-1.5.0.tgz#430ee07920b2d0a162b492054830a4a94ac065f3"
-  integrity sha512-8yBQY+C+A+cr7zXKAHXYcm3gioJdUuP0Qb/RFShzh4Q2RGmBfdVkiOxt7oR2MJua3T1v5H53vZhQvTADvIcAIw==
+"@auth0/auth0-spa-js@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@auth0/auth0-spa-js/-/auth0-spa-js-1.6.0.tgz#6cd345851fc846bf3a011886bc10f4cdefc3e234"
+  integrity sha512-W4vr9E3r79n2uEP0DEp/KGEW9sPRgH34iBEbtcgyhsQ1xV8SNzf50+dsaSZTOL0500FR+9CVeGnHz/q5V388OA==
   dependencies:
-    browser-tabs-lock "^1.1.9"
+    browser-tabs-lock "^1.2.1"
     core-js "^3.2.1"
     es-cookie "^1.2.0"
     fast-text-encoding "^1.0.0"
@@ -1829,10 +1829,10 @@ brorand@^1.0.1:
   resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
   integrity sha1-EsJe/kCkXjwyPrhnWgoM5XsiNx8=
 
-browser-tabs-lock@^1.1.9:
-  version "1.1.11"
-  resolved "https://registry.yarnpkg.com/browser-tabs-lock/-/browser-tabs-lock-1.1.11.tgz#e25f2a05f2fead3107de095e192f4339d87c043b"
-  integrity sha512-EYcK3sfSa3maa3GE3+9+TQkohV6XvzAyBpbl7yD1JRBAzvWJ6W8wApQe75UtQuL2T3HcRSwiNoksvKyo+uIVjw==
+browser-tabs-lock@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/browser-tabs-lock/-/browser-tabs-lock-1.2.1.tgz#70d950cde260badac80b22bde1f42bd0a317bcba"
+  integrity sha512-3NFpbd8cBwXNvAxzmomvNze2nSi3y2Q3DtNxytAY7+olhm7V21qicKDY90A2LxuAUesQMQcSGm8uQgBy9P5lOA==
 
 browserify-aes@^1.0.0, browserify-aes@^1.0.4:
   version "1.2.0"
