@@ -232,9 +232,7 @@ fn view(Model { error, form, rolls }: &Model) -> impl View<Msg> {
 #[wasm_bindgen(start)]
 pub fn render() {
     set_panic_hook();
-    seed::App::build(|_, _| Init::new(Model::default()), update, view)
-        .finish()
-        .run();
+    seed::App::build(|_, _| Init::new(Model::default()), update, view).build_and_start();
 }
 
 fn set_panic_hook() {
