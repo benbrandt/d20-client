@@ -80,7 +80,7 @@
     "binaryen": "^89.0.0",
     "caniuse-lite": "^1.0.30001015",
     "clean-webpack-plugin": "^3.0.0",
-    "copy-webpack-plugin": "^5.1.0",
+    "copy-webpack-plugin": "^5.1.1",
     "core-js": "^3.4.8",
     "css-loader": "^3.3.0",
     "eslint": "^6.7.2",
