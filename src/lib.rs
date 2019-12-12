@@ -1,12 +1,13 @@
 #![warn(clippy::all, clippy::nursery, clippy::pedantic)]
 use futures::Future;
-use graphql_client::{GraphQLQuery, Response};
 use js_sys::Date;
 use seed::prelude::*;
 use seed::{
     attrs, button, class, div, empty, error, fetch, form, header, input, option, section, select,
     span, strong, style, Method, Request,
 };
+use serde::Deserialize;
+use std::fmt;
 use wasm_bindgen::JsValue;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -20,14 +21,6 @@ const BACKEND_URL: &str = "http://localhost:3000";
 #[cfg(not(debug_assertions))]
 const BACKEND_URL: &str = "https://morning-eyrie-18336.herokuapp.com";
 
-#[derive(GraphQLQuery)]
-#[graphql(
-    schema_path = "schema.json",
-    query_path = "src/graphql/roll.graphql",
-    response_derives = "Clone, Debug"
-)]
-struct RollQuery;
-
 #[derive(Debug)]
 struct Form {
     num: String,
@@ -35,9 +28,36 @@ struct Form {
     modifier: String,
 }
 
-#[derive(Debug)]
+impl fmt::Display for Form {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}d{}", self.num, self.die)?;
+        let modifier: i32 = self.modifier.parse().unwrap_or_default();
+        if modifier != 0 {
+            write!(
+                f,
+                "{}{}",
+                if modifier < 0 { "-" } else { "+" },
+                modifier.abs()
+            )?;
+        }
+        Ok(())
+    }
+}
+
+#[derive(Clone, Debug, Deserialize)]
+/// Result of a roll
+pub struct RollResult {
+    /// The instruction passed in to roll the dice
+    pub instruction: String,
+    /// The results of all rolls made
+    pub rolls: Vec<i32>,
+    /// The total value of the entire roll
+    pub total: i32,
+}
+
+#[derive(Clone, Debug)]
 struct RollWithTime {
-    result: Option<roll_query::ResponseData>,
+    result: RollResult,
     time: Date,
 }
 
@@ -69,7 +89,7 @@ enum Msg {
     ChangeModifier(String),
     ChangeNum(String),
     GetRoll,
-    ReceiveRoll(Option<roll_query::ResponseData>),
+    ReceiveRoll(RollResult),
     ReceiveError,
 }
 
@@ -79,11 +99,7 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         Msg::ChangeModifier(val) => model.form.modifier = val,
         Msg::ChangeNum(val) => model.form.num = val,
         Msg::GetRoll => {
-            orders.skip().perform_cmd(get_roll(roll_query::Variables {
-                num: model.form.num.parse().unwrap_or_default(),
-                die: model.form.die.parse().unwrap_or_default(),
-                modifier: model.form.modifier.parse().unwrap_or_default(),
-            }));
+            orders.skip().perform_cmd(get_roll(&model.form));
         }
         Msg::ReceiveRoll(result) => model.rolls.push(RollWithTime {
             result,
@@ -93,19 +109,16 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
     }
 }
 
-fn get_roll(variables: roll_query::Variables) -> impl Future<Item = Msg, Error = Msg> {
-    Request::new(format!("{}/graphql", BACKEND_URL))
-        .method(Method::Post)
-        .body_json(&RollQuery::build_query(variables))
-        .fetch_json_data(
-            |r: fetch::ResponseDataResult<Response<roll_query::ResponseData>>| match r {
-                Ok(response) => Msg::ReceiveRoll(response.data),
-                Err(fail_reason) => {
-                    error(fail_reason);
-                    Msg::ReceiveError
-                }
-            },
-        )
+fn get_roll(form: &Form) -> impl Future<Item = Msg, Error = Msg> {
+    Request::new(format!("{}/roll/?roll={}", BACKEND_URL, form))
+        .method(Method::Get)
+        .fetch_json_data(|r: fetch::ResponseDataResult<RollResult>| match r {
+            Ok(response) => Msg::ReceiveRoll(response),
+            Err(fail_reason) => {
+                error(fail_reason);
+                Msg::ReceiveError
+            }
+        })
 }
 
 fn dice_option(form: &Form, die: &str) -> Node<Msg> {
@@ -121,33 +134,29 @@ fn roll_result(rolls: &[RollWithTime]) -> Node<Msg> {
         .iter()
         .rev()
         .map(|RollWithTime { result, time }| {
-            if let Some(r) = result {
+            div![
+                class!["columns", "flex-centered", "py-2"],
                 div![
-                    class!["columns", "flex-centered", "py-2"],
-                    div![
-                        class!["column", "col-6", "h5", "text-right"],
-                        format!("{}: ", r.roll.instruction),
-                        strong![class!["text-large"], format!("{}", r.roll.total)],
-                    ],
-                    div![
-                        class!["column", "col-6"],
-                        strong!["Rolls: "],
-                        r.roll
-                            .rolls
-                            .iter()
-                            .map(|r| format!("{}", r))
-                            .collect::<Vec<String>>()
-                            .join(", ")
-                    ],
-                    div![
-                        class!["column", "col-12", "text-center"],
-                        style! {St::FontSize => "75%";},
-                        String::from(time.to_locale_string("default", &JsValue::UNDEFINED))
-                    ]
+                    class!["column", "col-6", "h5", "text-right"],
+                    format!("{}: ", result.instruction),
+                    strong![class!["text-large"], format!("{}", result.total)],
+                ],
+                div![
+                    class!["column", "col-6"],
+                    strong!["Rolls: "],
+                    result
+                        .rolls
+                        .iter()
+                        .map(|r| format!("{}", r))
+                        .collect::<Vec<String>>()
+                        .join(", ")
+                ],
+                div![
+                    class!["column", "col-12", "text-center"],
+                    style! {St::FontSize => "75%";},
+                    String::from(time.to_locale_string("default", &JsValue::UNDEFINED))
                 ]
-            } else {
-                empty![]
-            }
+            ]
         })
         .collect();
     div![class!["container"], roll_view]
