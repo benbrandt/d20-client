@@ -1097,10 +1097,10 @@
     semver "^6.3.0"
     tsutils "^3.17.1"
 
-"@wasm-tool/wasm-pack-plugin@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@wasm-tool/wasm-pack-plugin/-/wasm-pack-plugin-1.0.1.tgz#dd306b886ebbdfafb67fe3ba79d8efaddeee5cfc"
-  integrity sha512-QPGoweQl6kgQMLMLboVMwUZiJ/OBoia0VaaWr6YoFGGx7tj7aG/+4HNK5Yu8RQGNFFdVnz2SWjRaGpALoZOhiQ==
+"@wasm-tool/wasm-pack-plugin@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@wasm-tool/wasm-pack-plugin/-/wasm-pack-plugin-1.1.0.tgz#94016deba0f59306d1a9f0cb3b15144d8cd9ab34"
+  integrity sha512-44vbq7MyZzavE7g5Q7RKlnFtI35BhUkNiUANTeOivbpRfsRw0d0n9lA2ytmiVS4O+AVRsjjPLVSv35kPvL+OWg==
   dependencies:
     chalk "^2.4.1"
     command-exists "^1.2.7"
