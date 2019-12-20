@@ -53,7 +53,7 @@ dependencies = [
  "seed 0.5.0 (git+https://github.com/David-OConnor/seed)",
  "serde 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
  "wasm-bindgen 0.2.56 (registry+https://github.com/rust-lang/crates.io-index)",
- "wasm-bindgen-futures 0.3.27 (registry+https://github.com/rust-lang/crates.io-index)",
+ "wasm-bindgen-futures 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "wasm-bindgen-test 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "web-sys 0.3.33 (registry+https://github.com/rust-lang/crates.io-index)",
  "wee_alloc 0.4.5 (registry+https://github.com/rust-lang/crates.io-index)",
