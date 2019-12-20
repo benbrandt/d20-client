@@ -1,10 +1,9 @@
 #![warn(clippy::all, clippy::nursery, clippy::pedantic)]
-use futures::Future;
 use js_sys::Date;
 use seed::prelude::*;
 use seed::{
-    attrs, button, class, div, empty, error, fetch, form, header, input, option, section, select,
-    span, strong, style, Method, Request,
+    attrs, browser::service::fetch, button, class, div, empty, error, form, header, input, option,
+    section, select, span, strong, style, Method, Request,
 };
 use serde::Deserialize;
 use std::fmt;
@@ -99,7 +98,16 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         Msg::ChangeModifier(val) => model.form.modifier = val,
         Msg::ChangeNum(val) => model.form.num = val,
         Msg::GetRoll => {
-            orders.skip().perform_cmd(get_roll(&model.form));
+            let request = Request::new(format!("{}/roll/?roll={}", BACKEND_URL, &model.form))
+                .method(Method::Get)
+                .fetch_json_data(|r: fetch::ResponseDataResult<RollResult>| match r {
+                    Ok(response) => Msg::ReceiveRoll(response),
+                    Err(fail_reason) => {
+                        error(fail_reason);
+                        Msg::ReceiveError
+                    }
+                });
+            orders.skip().perform_cmd(request);
         }
         Msg::ReceiveRoll(result) => model.rolls.push(RollWithTime {
             result,
@@ -107,18 +115,6 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         }),
         Msg::ReceiveError => model.error = Some("Request failed".into()),
     }
-}
-
-fn get_roll(form: &Form) -> impl Future<Item = Msg, Error = Msg> {
-    Request::new(format!("{}/roll/?roll={}", BACKEND_URL, form))
-        .method(Method::Get)
-        .fetch_json_data(|r: fetch::ResponseDataResult<RollResult>| match r {
-            Ok(response) => Msg::ReceiveRoll(response),
-            Err(fail_reason) => {
-                error(fail_reason);
-                Msg::ReceiveError
-            }
-        })
 }
 
 fn dice_option(form: &Form, die: &str) -> Node<Msg> {
@@ -241,7 +237,7 @@ fn view(Model { error, form, rolls }: &Model) -> impl View<Msg> {
 #[wasm_bindgen(start)]
 pub fn render() {
     set_panic_hook();
-    seed::App::builder(update, view).build_and_start();
+    App::builder(update, view).build_and_start();
 }
 
 fn set_panic_hook() {
