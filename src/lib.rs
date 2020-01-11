@@ -35,7 +35,7 @@ impl fmt::Display for Form {
             write!(
                 f,
                 "{}{}",
-                if modifier < 0 { "-" } else { "+" },
+                if modifier < 0 { "-" } else { "%2B" }, // +
                 modifier.abs()
             )?;
         }
@@ -98,15 +98,16 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         Msg::ChangeModifier(val) => model.form.modifier = val,
         Msg::ChangeNum(val) => model.form.num = val,
         Msg::GetRoll => {
-            let request = Request::new(format!("{}/roll/?roll={}", BACKEND_URL, &model.form))
-                .method(Method::Get)
-                .fetch_json_data(|r: fetch::ResponseDataResult<RollResult>| match r {
-                    Ok(response) => Msg::ReceiveRoll(response),
-                    Err(fail_reason) => {
-                        error(fail_reason);
-                        Msg::ReceiveError
-                    }
-                });
+            let request =
+                Request::new(format!("{}/roll/?roll={}", BACKEND_URL, &model.form.into()))
+                    .method(Method::Get)
+                    .fetch_json_data(|r: fetch::ResponseDataResult<RollResult>| match r {
+                        Ok(response) => Msg::ReceiveRoll(response),
+                        Err(fail_reason) => {
+                            error(fail_reason);
+                            Msg::ReceiveError
+                        }
+                    });
             orders.skip().perform_cmd(request);
         }
         Msg::ReceiveRoll(result) => model.rolls.push(RollWithTime {
