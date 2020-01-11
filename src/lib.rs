@@ -35,7 +35,7 @@ impl fmt::Display for Form {
             write!(
                 f,
                 "{}{}",
-                if modifier < 0 { "-" } else { "+" },
+                if modifier < 0 { "-" } else { "%2B" }, // +
                 modifier.abs()
             )?;
         }
