@@ -174,7 +174,7 @@ fn view(Model { error, form, rolls }: &Model) -> impl View<Msg> {
             None => empty![],
         },
         form![
-            raw_ev(Ev::Submit, |event| {
+            ev(Ev::Submit, |event| {
                 event.prevent_default();
                 Msg::GetRoll
             }),
