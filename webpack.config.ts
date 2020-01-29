@@ -19,7 +19,10 @@ const dist = path.resolve(__dirname, "dist");
 const env = process.env.NODE_ENV;
 const isEnvProd = env === "production";
 
-const getStyleLoaders = (cssOptions: Object, preProcessor?: string) => {
+const getStyleLoaders = (
+  cssOptions: Record<string, unknown>,
+  preProcessor?: string
+): webpack.Loader[] => {
   const loaders = [
     isEnvProd ? { loader: MiniCssExtractPlugin.loader } : "style-loader",
     {
@@ -30,7 +33,7 @@ const getStyleLoaders = (cssOptions: Object, preProcessor?: string) => {
       loader: "postcss-loader",
       options: {
         ident: "postcss",
-        plugins: () => [postCssPresetEnv()],
+        plugins: (): unknown[] => [postCssPresetEnv()],
         sourceMap: true
       }
     }
@@ -52,7 +55,7 @@ const config: webpack.Configuration = {
     chunkFilename: `[name].${isEnvProd ? "[contenthash]." : ""}js`
   },
   devServer: {
-    before(app) {
+    before(app): void {
       app.use(noopServiceWorkerMiddleware());
     },
     compress: true,
@@ -138,15 +141,20 @@ const config: webpack.Configuration = {
     }),
     isEnvProd &&
       new WorkboxWebpackPlugin.GenerateSW({
+        // eslint-disable-next-line
+        // @ts-ignore
+        cleanupOutdatedCaches: true,
         clientsClaim: true,
-        importWorkboxFrom: "local",
         navigateFallback: "/index.html",
-        navigateFallbackBlacklist: [
+        // eslint-disable-next-line
+        // @ts-ignore
+        navigateFallbackDenylist: [
           // Exclude URLs containing a dot, as they're likely a resource in
           // public/ and not a SPA route
           new RegExp("/[^/]+\\.[^/]+$")
         ],
-        skipWaiting: true
+        skipWaiting: true,
+        sourcemap: true
       })
   ].filter(Boolean)
 };
