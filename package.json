@@ -9,7 +9,8 @@
     "build": "NODE_ENV=production TS_NODE_PROJECT=\"webpack.tsconfig.json\" webpack --mode=production && yarn optimize-wasm",
     "test": "wasm-pack test --node",
     "optimize-wasm": "TS_NODE_PROJECT=\"webpack.tsconfig.json\" ts-node scripts/optimize_wasm.ts",
-    "lint": "eslint --ext .ts --ext .js ./js/**/*"
+    "lint": "eslint --ext .ts --ext .js ./js/**/*",
+    "tsc": "tsc"
   },
   "browserslist": [
     "Chrome >= 57",
