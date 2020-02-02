@@ -70,7 +70,7 @@
     "@types/node": "^13.7.0",
     "@types/optimize-css-assets-webpack-plugin": "^5.0.1",
     "@types/terser-webpack-plugin": "^2.2.0",
-    "@types/webpack": "^4.41.3",
+    "@types/webpack": "^4.41.4",
     "@types/webpack-bundle-analyzer": "^2.13.3",
     "@types/webpack-dev-server": "^3.10.0",
     "@types/workbox-webpack-plugin": "^4.1.0",
