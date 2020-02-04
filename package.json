@@ -113,7 +113,7 @@
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.6.3",
-    "@sentry/browser": "^5.11.2",
+    "@sentry/browser": "^5.12.1",
     "fast-text-encoding": "^1.0.0",
     "register-service-worker": "^1.6.2",
     "spectre.css": "^0.5.8"
