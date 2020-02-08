@@ -150,13 +150,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
 
       - name: Use Node.js 12.x
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
 
       - uses: actions/download-artifact@v1
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         with:
           name: dist
           path: dist
