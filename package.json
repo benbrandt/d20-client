@@ -111,7 +111,7 @@
     "@auth0/auth0-spa-js": "^1.6.4",
     "@sentry/browser": "^5.13.2",
     "fast-text-encoding": "^1.0.1",
-    "register-service-worker": "^1.6.2",
+    "register-service-worker": "^1.7.0",
     "spectre.css": "^0.5.8"
   }
 }
