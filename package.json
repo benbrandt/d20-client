@@ -108,7 +108,7 @@
     "workbox-webpack-plugin": "^5.0.0"
   },
   "dependencies": {
-    "@auth0/auth0-spa-js": "^1.6.4",
+    "@auth0/auth0-spa-js": "^1.6.5",
     "@sentry/browser": "^5.14.2",
     "fast-text-encoding": "^1.0.1",
     "register-service-worker": "^1.7.1",
