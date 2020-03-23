@@ -5,7 +5,7 @@ import * as Sentry from "@sentry/browser";
 import { register } from "register-service-worker";
 
 Sentry.init({
-  dsn: "https://046b94f8170f4135a47ca9d0f9709a6d@sentry.io/1438468"
+  dsn: "https://046b94f8170f4135a47ca9d0f9709a6d@sentry.io/1438468",
 });
 
 async function startup(): Promise<void> {
@@ -40,5 +40,5 @@ register("/service-worker.js", {
   error(error): void {
     Sentry.captureException(error);
     console.error("Error during service worker registration:", error);
-  }
+  },
 });

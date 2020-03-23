@@ -8,6 +8,7 @@
     "start": "NODE_ENV=development TS_NODE_PROJECT=\"webpack.tsconfig.json\" webpack-dev-server -d --mode=development",
     "build": "NODE_ENV=production TS_NODE_PROJECT=\"webpack.tsconfig.json\" webpack --mode=production",
     "test": "wasm-pack test --node",
+    "prettier": "prettier --write .",
     "lint": "eslint --ext .ts --ext .js ./js/**/*",
     "tsc": "tsc"
   },

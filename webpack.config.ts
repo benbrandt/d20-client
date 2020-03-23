@@ -27,21 +27,21 @@ const getStyleLoaders = (
     isEnvProd ? { loader: MiniCssExtractPlugin.loader } : "style-loader",
     {
       loader: "css-loader",
-      options: { sourceMap: true, ...cssOptions }
+      options: { sourceMap: true, ...cssOptions },
     },
     {
       loader: "postcss-loader",
       options: {
         ident: "postcss",
         plugins: (): unknown[] => [postCssPresetEnv()],
-        sourceMap: true
-      }
-    }
+        sourceMap: true,
+      },
+    },
   ];
   if (preProcessor) {
     loaders.push({
       loader: preProcessor,
-      options: { sourceMap: true }
+      options: { sourceMap: true },
     });
   }
   return loaders;
@@ -52,7 +52,7 @@ const config: webpack.Configuration = {
   output: {
     path: dist,
     filename: `[name].${isEnvProd ? "[contenthash]." : ""}js`,
-    chunkFilename: `[name].${isEnvProd ? "[contenthash]." : ""}js`
+    chunkFilename: `[name].${isEnvProd ? "[contenthash]." : ""}js`,
   },
   devServer: {
     before(app): void {
@@ -63,11 +63,11 @@ const config: webpack.Configuration = {
     hot: true,
     overlay: true,
     publicPath: "/",
-    watchContentBase: true
+    watchContentBase: true,
   },
   devtool: isEnvProd ? "source-map" : "cheap-module-source-map",
   resolve: {
-    extensions: [".wasm", ".ts", ".mjs", ".js", ".json"]
+    extensions: [".wasm", ".ts", ".mjs", ".js", ".json"],
   },
   module: {
     rules: [
@@ -75,11 +75,11 @@ const config: webpack.Configuration = {
         oneOf: [
           {
             test: /\.css$/,
-            use: getStyleLoaders({ importLoaders: 1 })
+            use: getStyleLoaders({ importLoaders: 1 }),
           },
           {
             test: /\.(scss|sass)$/,
-            use: getStyleLoaders({ importLoaders: 2 }, "sass-loader")
+            use: getStyleLoaders({ importLoaders: 2 }, "sass-loader"),
           },
           {
             test: /\.(js|mjs|ts)$/,
@@ -88,56 +88,56 @@ const config: webpack.Configuration = {
             options: {
               cacheDirectory: true,
               cacheCompression: isEnvProd,
-              compact: isEnvProd
-            }
-          }
-        ]
-      }
-    ]
+              compact: isEnvProd,
+            },
+          },
+        ],
+      },
+    ],
   },
   optimization: {
     minimizer: [
       new TerserPlugin({
         cache: true,
         parallel: true,
-        sourceMap: true
+        sourceMap: true,
       }),
       new OptimizeCSSAssetsPlugin({
         cssProcessorOptions: {
           map: {
             inline: false,
-            annotation: true
-          }
-        }
-      })
+            annotation: true,
+          },
+        },
+      }),
     ],
-    runtimeChunk: true
+    runtimeChunk: true,
   },
   plugins: [
     isEnvProd &&
       new BundleAnalyzerPlugin({ analyzerMode: "static", openAnalyzer: false }),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
-      { from: "public", to: ".", ignore: ["index.html"] }
+      { from: "public", to: ".", ignore: ["index.html"] },
     ]),
     new HtmlWebpackPlugin({ template: "public/index.html" }),
     new ForkTsCheckerWebpackPlugin({
       async: env === "development",
       checkSyntacticErrors: true,
       silent: true,
-      useTypescriptIncrementalApi: true
+      useTypescriptIncrementalApi: true,
     }),
     isEnvProd &&
       new MiniCssExtractPlugin({
         filename: "[name].[contenthash].css",
-        chunkFilename: "[name].[contenthash].css"
+        chunkFilename: "[name].[contenthash].css",
       }),
     isEnvProd &&
       new PreloadWebpackPlugin({
-        fileBlacklist: [/\.map/, /\.wasm/]
+        fileBlacklist: [/\.map/, /\.wasm/],
       }),
     new WasmPackPlugin({
-      crateDirectory: path.resolve(__dirname, "./")
+      crateDirectory: path.resolve(__dirname, "./"),
     }),
     isEnvProd &&
       new WorkboxWebpackPlugin.GenerateSW({
@@ -151,12 +151,12 @@ const config: webpack.Configuration = {
         navigateFallbackDenylist: [
           // Exclude URLs containing a dot, as they're likely a resource in
           // public/ and not a SPA route
-          new RegExp("/[^/]+\\.[^/]+$")
+          new RegExp("/[^/]+\\.[^/]+$"),
         ],
         skipWaiting: true,
-        sourcemap: true
-      })
-  ].filter(Boolean)
+        sourcemap: true,
+      }),
+  ].filter(Boolean),
 };
 
 export default config;
