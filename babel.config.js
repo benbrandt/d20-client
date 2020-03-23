@@ -1,4 +1,4 @@
-module.exports = function(api) {
+module.exports = function (api) {
   api.cache(false);
   const env = process.env.NODE_ENV;
 
@@ -9,33 +9,35 @@ module.exports = function(api) {
         ? [
             "@babel/preset-env",
             {
-              corejs: 3,
+              bugfixes: true,
+              corejs: { version: 3, proposals: true },
               shippedProposals: true,
               targets: {
-                node: "current"
+                node: "current",
               },
-              useBuiltIns: "usage"
-            }
+              useBuiltIns: "usage",
+            },
           ]
         : [
             "@babel/preset-env",
             {
-              corejs: 3,
+              bugfixes: true,
+              corejs: { version: 3, proposals: true },
               modules: false,
               shippedProposals: true,
-              useBuiltIns: "usage"
-            }
+              useBuiltIns: "usage",
+            },
           ],
-      "@babel/preset-typescript"
+      "@babel/preset-typescript",
     ],
     plugins: [
       [
         "@babel/plugin-transform-runtime",
         {
           regenerator: false,
-          useESModules: env !== "test"
-        }
-      ]
-    ]
+          useESModules: env !== "test",
+        },
+      ],
+    ],
   };
 };
