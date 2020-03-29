@@ -2,8 +2,10 @@
 use js_sys::Date;
 use seed::prelude::*;
 use seed::{
-    attrs, browser::service::fetch, button, class, div, empty, error, form, header, input, option,
-    section, select, span, strong, style, Method, Request,
+    attrs,
+    browser::fetch::{self, Method, Request},
+    button, class, div, empty, error, form, header, input, option, section, select, span, strong,
+    style,
 };
 use serde::Deserialize;
 use std::fmt;
@@ -20,7 +22,7 @@ const BACKEND_URL: &str = "http://localhost:3000";
 #[cfg(not(debug_assertions))]
 const BACKEND_URL: &str = "https://morning-eyrie-18336.herokuapp.com";
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 struct Form {
     num: String,
     die: String,
@@ -98,16 +100,18 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         Msg::ChangeModifier(val) => model.form.modifier = val,
         Msg::ChangeNum(val) => model.form.num = val,
         Msg::GetRoll => {
-            let request = Request::new(format!("{}/roll/?roll={}", BACKEND_URL, &model.form))
-                .method(Method::Get)
-                .fetch_json_data(|r: fetch::ResponseDataResult<RollResult>| match r {
-                    Ok(response) => Msg::ReceiveRoll(response),
-                    Err(fail_reason) => {
-                        error(fail_reason);
-                        Msg::ReceiveError
+            orders.skip().perform_cmd({
+                let form = model.form.clone();
+                async {
+                    match send_form(form).await {
+                        Ok(response) => Msg::ReceiveRoll(response),
+                        Err(fail_reason) => {
+                            error(fail_reason);
+                            Msg::ReceiveError
+                        }
                     }
-                });
-            orders.skip().perform_cmd(request);
+                }
+            });
         }
         Msg::ReceiveRoll(result) => model.rolls.push(RollWithTime {
             result,
@@ -115,6 +119,16 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
         }),
         Msg::ReceiveError => model.error = Some("Request failed".into()),
     }
+}
+
+async fn send_form(form: Form) -> fetch::Result<RollResult> {
+    Request::new(format!("{}/roll/?roll={}", BACKEND_URL, &form))
+        .method(Method::Get)
+        .fetch()
+        .await?
+        .check_status()?
+        .json()
+        .await
 }
 
 fn dice_option(form: &Form, die: &str) -> Node<Msg> {
@@ -159,7 +173,7 @@ fn roll_result(rolls: &[RollWithTime]) -> Node<Msg> {
 }
 
 // View
-fn view(Model { error, form, rolls }: &Model) -> impl View<Msg> {
+fn view(Model { error, form, rolls }: &Model) -> impl IntoNodes<Msg> {
     div![
         class!["container", "grid-lg", "p-2"],
         header![
