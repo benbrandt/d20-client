@@ -73,7 +73,7 @@
     "@types/webpack-bundle-analyzer": "^2.13.3",
     "@types/webpack-dev-server": "^3.10.1",
     "@types/workbox-webpack-plugin": "^5.0.0",
-    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/eslint-plugin": "^2.28.0",
     "@typescript-eslint/parser": "^2.28.0",
     "@wasm-tool/wasm-pack-plugin": "^1.2.0",
     "babel-loader": "^8.1.0",
