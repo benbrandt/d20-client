@@ -1209,10 +1209,10 @@
     "@types/webpack-sources" "*"
     source-map "^0.6.0"
 
-"@types/workbox-webpack-plugin@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@types/workbox-webpack-plugin/-/workbox-webpack-plugin-5.0.0.tgz#5ed921dfa1238893d8e1e6df5e972a036fa98baf"
-  integrity sha512-Ov3e317b+1q5vrHPJAzPFrvDHb9COlkisNU7FJH4r7MWhwxN+xnkJZhtpYxFVexe9RRoJVpz/2WONhXnVPf+NA==
+"@types/workbox-webpack-plugin@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@types/workbox-webpack-plugin/-/workbox-webpack-plugin-5.1.0.tgz#14312df4eeb4e2195b886c3fa5632d76bf3831c8"
+  integrity sha512-dv3M467adBHEJtRDiT1Wz/qgtalFb+eDik4IeBY5Rjv9iJ+vJZGK7cO7riOwaYgpMlIWnmRhwWs6/SUOzn3AaA==
 
 "@typescript-eslint/eslint-plugin@^2.28.0":
   version "2.28.0"
