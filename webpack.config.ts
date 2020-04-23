@@ -138,6 +138,7 @@ const config: webpack.Configuration = {
       }),
     new WasmPackPlugin({
       crateDirectory: path.resolve(__dirname, "./"),
+      pluginLogLevel: "info",
     }),
     isEnvProd &&
       new WorkboxWebpackPlugin.GenerateSW({
