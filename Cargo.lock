@@ -405,7 +405,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "seed"
 version = "0.7.0"
-source = "git+https://github.com/David-OConnor/seed#dc230885218582ba70727b4842bd33ea6027c23f"
+source = "git+https://github.com/David-OConnor/seed#3134d21c6fcb2383685885687fe2a7610fb2ff74"
 dependencies = [
  "console_error_panic_hook 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "cookie 0.13.3 (registry+https://github.com/rust-lang/crates.io-index)",
