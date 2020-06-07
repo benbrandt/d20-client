@@ -117,9 +117,11 @@ const config: webpack.Configuration = {
     isEnvProd &&
       new BundleAnalyzerPlugin({ analyzerMode: "static", openAnalyzer: false }),
     new CleanWebpackPlugin(),
-    new CopyWebpackPlugin([
-      { from: "public", to: ".", ignore: ["index.html"] },
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: "public", to: ".", globOptions: { ignore: ["index.html"] } },
+      ],
+    }),
     new HtmlWebpackPlugin({ template: "public/index.html" }),
     new ForkTsCheckerWebpackPlugin({
       async: env === "development",

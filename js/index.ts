@@ -1,4 +1,4 @@
-/* eslint-disable no-console, @typescript-eslint/ban-ts-ignore */
+/* eslint-disable no-console */
 import "spectre.css/src/spectre.scss";
 import "fast-text-encoding";
 import * as Sentry from "@sentry/browser";
@@ -9,12 +9,13 @@ Sentry.init({
 });
 
 async function startup(): Promise<void> {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   // eslint-disable-next-line import/no-unresolved
   await import("../pkg");
 }
 
-startup();
+void startup();
 
 register("/service-worker.js", {
   ready(): void {
