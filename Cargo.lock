@@ -42,9 +42,9 @@ dependencies = [
 
 [[package]]
 name = "cookie"
-version = "0.13.3"
+version = "0.14.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0c60ef6d0bbf56ad2674249b6bb74f2c6aeb98b98dd57b5d3e37cace33011d69"
+checksum = "ca761767cf3fa9068cc893ec8c247a22d0fd0535848e65640c0548bd1f8bbb36"
 dependencies = [
  "percent-encoding",
  "time",
@@ -456,7 +456,7 @@ checksum = "ea6a9290e3c9cf0f18145ef7ffa62d68ee0bf5fcd651017e586dc7fd5da448c2"
 [[package]]
 name = "seed"
 version = "0.7.0"
-source = "git+https://github.com/David-OConnor/seed#29666287eaf5e914c80e9fae7cc6736cd31ce087"
+source = "git+https://github.com/David-OConnor/seed#2b134d1de2a8b9aa520d11be6e45eef1e5fcd527"
 dependencies = [
  "console_error_panic_hook",
  "cookie",
