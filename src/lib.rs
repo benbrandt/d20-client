@@ -1,4 +1,6 @@
 #![warn(clippy::all, clippy::nursery, clippy::pedantic)]
+#![allow(clippy::used_underscore_binding)]
+
 use js_sys::Date;
 use seed::prelude::*;
 use seed::{
