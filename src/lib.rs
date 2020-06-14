@@ -2,12 +2,12 @@
 #![allow(clippy::future_not_send, clippy::used_underscore_binding)]
 
 use js_sys::Date;
-use seed::prelude::*;
 use seed::{
     attrs,
     browser::fetch::{self, Method, Request},
-    button, class, div, empty, error, form, header, input, option, section, select, span, strong,
-    style,
+    button, console_error_panic_hook, div, empty, error, form, header, input, option,
+    prelude::*,
+    section, select, span, strong, style, C,
 };
 use serde::Deserialize;
 use std::fmt;
@@ -85,6 +85,10 @@ impl Default for Model {
     }
 }
 
+fn init(_: Url, _: &mut impl Orders<Msg>) -> Model {
+    Model::default()
+}
+
 // Update
 #[derive(Clone)]
 enum Msg {
@@ -147,14 +151,14 @@ fn roll_result(rolls: &[RollWithTime]) -> Node<Msg> {
         .rev()
         .map(|RollWithTime { result, time }| {
             div![
-                class!["columns", "flex-centered", "py-2"],
+                C!["columns", "flex-centered", "py-2"],
                 div![
-                    class!["column", "col-6", "h5", "text-right"],
+                    C!["column", "col-6", "h5", "text-right"],
                     format!("{}: ", result.instruction),
-                    strong![class!["text-large"], format!("{}", result.total)],
+                    strong![C!["text-large"], format!("{}", result.total)],
                 ],
                 div![
-                    class!["column", "col-6"],
+                    C!["column", "col-6"],
                     strong!["Rolls: "],
                     result
                         .rolls
@@ -164,29 +168,29 @@ fn roll_result(rolls: &[RollWithTime]) -> Node<Msg> {
                         .join(", ")
                 ],
                 div![
-                    class!["column", "col-12", "text-center"],
+                    C!["column", "col-12", "text-center"],
                     style! {St::FontSize => "75%";},
                     String::from(time.to_locale_string("default", &JsValue::UNDEFINED))
                 ]
             ]
         })
         .collect();
-    div![class!["container"], roll_view]
+    div![C!["container"], roll_view]
 }
 
 // View
 fn view(Model { error, form, rolls }: &Model) -> impl IntoNodes<Msg> {
     div![
-        class!["container", "grid-lg", "p-2"],
+        C!["container", "grid-lg", "p-2"],
         header![
-            class!["navbar p-2"],
+            C!["navbar p-2"],
             section![
-                class!["navbar-section"],
-                span![class!["navbar-brand mr-2"], "Dice Roller"],
+                C!["navbar-section"],
+                span![C!["navbar-brand mr-2"], "Dice Roller"],
             ]
         ],
         match error {
-            Some(e) => div![class!["toast", "toast-error"], e],
+            Some(e) => div![C!["toast", "toast-error"], e],
             None => empty![],
         },
         form![
@@ -194,10 +198,10 @@ fn view(Model { error, form, rolls }: &Model) -> impl IntoNodes<Msg> {
                 event.prevent_default();
                 Msg::GetRoll
             }),
-            class!["p-2"],
+            C!["p-2"],
             div![
-                class!["input-group"],
-                span![class!["input-group-addon"], "#"],
+                C!["input-group"],
+                span![C!["input-group-addon"], "#"],
                 input![
                     attrs! {
                         At::Class => "form-input",
@@ -210,7 +214,7 @@ fn view(Model { error, form, rolls }: &Model) -> impl IntoNodes<Msg> {
                     },
                     input_ev(Ev::Input, Msg::ChangeNum),
                 ],
-                span![class!["input-group-addon"], "d"],
+                span![C!["input-group-addon"], "d"],
                 select![
                     attrs! {
                         At::Class => "form-select",
@@ -227,7 +231,7 @@ fn view(Model { error, form, rolls }: &Model) -> impl IntoNodes<Msg> {
                     dice_option(form, "20"),
                     dice_option(form, "100"),
                 ],
-                span![class!["input-group-addon"], "+"],
+                span![C!["input-group-addon"], "+"],
                 input![
                     attrs! {
                         At::Class => "form-input",
@@ -252,15 +256,8 @@ fn view(Model { error, form, rolls }: &Model) -> impl IntoNodes<Msg> {
 // Called by our JS entry point
 #[wasm_bindgen(start)]
 pub fn render() {
-    set_panic_hook();
-    App::builder(update, view).build_and_start();
-}
-
-fn set_panic_hook() {
-    // When the `console_error_panic_hook` feature is enabled, we can call the
-    // `set_panic_hook` function to get better error messages if we ever panic.
-    #[cfg(feature = "console_error_panic_hook")]
     console_error_panic_hook::set_once();
+    App::start("app", init, update, view);
 }
 
 #[cfg(test)]
