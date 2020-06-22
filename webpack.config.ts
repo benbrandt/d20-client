@@ -123,12 +123,7 @@ const config: webpack.Configuration = {
       ],
     }),
     new HtmlWebpackPlugin({ template: "public/index.html" }),
-    new ForkTsCheckerWebpackPlugin({
-      async: env === "development",
-      checkSyntacticErrors: true,
-      silent: true,
-      useTypescriptIncrementalApi: true,
-    }),
+    new ForkTsCheckerWebpackPlugin({ async: env === "development" }),
     isEnvProd &&
       new MiniCssExtractPlugin({
         filename: "[name].[contenthash].css",
