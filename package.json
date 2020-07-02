@@ -106,6 +106,6 @@
     "@sentry/browser": "^5.19.0",
     "fast-text-encoding": "^1.0.3",
     "register-service-worker": "^1.7.1",
-    "spectre.css": "^0.5.8"
+    "spectre.css": "^0.5.9"
   }
 }
