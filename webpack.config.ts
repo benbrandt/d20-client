@@ -2,14 +2,13 @@ import WasmPackPlugin from "@wasm-tool/wasm-pack-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin";
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import path from "path";
-import OptimizeCSSAssetsPlugin from "optimize-css-assets-webpack-plugin";
 import postCssPresetEnv from "postcss-preset-env";
 import PreloadWebpackPlugin from "preload-webpack-plugin";
-import TerserPlugin from "terser-webpack-plugin";
 import webpack from "webpack";
 import WorkboxWebpackPlugin from "workbox-webpack-plugin";
 import noopServiceWorkerMiddleware from "./js/noopServiceWorkerMiddleware";
@@ -22,7 +21,7 @@ const isEnvProd = env === "production";
 const getStyleLoaders = (
   cssOptions: Record<string, unknown>,
   preProcessor?: string
-): webpack.Loader[] => {
+): webpack.RuleSetUse => {
   const loaders = [
     isEnvProd ? { loader: MiniCssExtractPlugin.loader } : "style-loader",
     {
@@ -32,8 +31,10 @@ const getStyleLoaders = (
     {
       loader: "postcss-loader",
       options: {
-        ident: "postcss",
-        plugins: (): unknown[] => [postCssPresetEnv()],
+        postcssOptions: {
+          ident: "postcss",
+          plugins: (): unknown[] => [postCssPresetEnv()],
+        },
         sourceMap: true,
       },
     },
@@ -49,6 +50,9 @@ const getStyleLoaders = (
 
 const config: webpack.Configuration = {
   entry: "./js/index.ts",
+  experiments: {
+    asyncWebAssembly: true,
+  },
   output: {
     path: dist,
     filename: `[name].${isEnvProd ? "[contenthash]." : ""}js`,
@@ -97,19 +101,8 @@ const config: webpack.Configuration = {
   },
   optimization: {
     minimizer: [
-      new TerserPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true,
-      }),
-      new OptimizeCSSAssetsPlugin({
-        cssProcessorOptions: {
-          map: {
-            inline: false,
-            annotation: true,
-          },
-        },
-      }),
+      "...",
+      new CssMinimizerPlugin(),
     ],
     runtimeChunk: true,
   },
