@@ -2,7 +2,7 @@ import WasmPackPlugin from "@wasm-tool/wasm-pack-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin";
-import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
@@ -100,10 +100,7 @@ const config: webpack.Configuration = {
     ],
   },
   optimization: {
-    minimizer: [
-      "...",
-      new CssMinimizerPlugin(),
-    ],
+    minimizer: ["...", new CssMinimizerPlugin()],
     runtimeChunk: true,
   },
   plugins: [
@@ -132,13 +129,9 @@ const config: webpack.Configuration = {
     }),
     isEnvProd &&
       new WorkboxWebpackPlugin.GenerateSW({
-        // eslint-disable-next-line
-        // @ts-ignore
         cleanupOutdatedCaches: true,
         clientsClaim: true,
         navigateFallback: "/index.html",
-        // eslint-disable-next-line
-        // @ts-ignore
         navigateFallbackDenylist: [
           // Exclude URLs containing a dot, as they're likely a resource in
           // public/ and not a SPA route
