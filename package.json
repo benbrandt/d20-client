@@ -72,7 +72,7 @@
     "babel-loader": "^8.2.1",
     "caniuse-lite": "^1.0.30001157",
     "clean-webpack-plugin": "^3.0.0",
-    "copy-webpack-plugin": "^6.3.0",
+    "copy-webpack-plugin": "^6.3.1",
     "core-js": "^3.7.0",
     "css-loader": "^5.0.1",
     "css-minimizer-webpack-plugin": "^1.1.5",
