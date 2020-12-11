@@ -21,7 +21,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Use Node.js 12.x
-        uses: actions/setup-node@v2.1.2
+        uses: actions/setup-node@v2.1.3
         with:
           node-version: 12.x
 
@@ -117,7 +117,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Use Node.js 12.x
-        uses: actions/setup-node@v2.1.2
+        uses: actions/setup-node@v2.1.3
         with:
           node-version: 12.x
 
@@ -154,7 +154,7 @@ jobs:
 
       - name: Use Node.js 12.x
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        uses: actions/setup-node@v2.1.2
+        uses: actions/setup-node@v2.1.3
         with:
           node-version: 12.x
 
