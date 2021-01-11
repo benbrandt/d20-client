@@ -75,7 +75,7 @@
     "copy-webpack-plugin": "^7.0.0",
     "core-js": "^3.8.2",
     "css-loader": "^5.0.1",
-    "css-minimizer-webpack-plugin": "^1.1.5",
+    "css-minimizer-webpack-plugin": "^1.2.0",
     "eslint": "^7.17.0",
     "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-import": "^2.22.1",
