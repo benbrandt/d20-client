@@ -70,7 +70,7 @@
     "@typescript-eslint/parser": "^4.14.2",
     "@wasm-tool/wasm-pack-plugin": "^1.3.1",
     "babel-loader": "^8.2.2",
-    "caniuse-lite": "^1.0.30001181",
+    "caniuse-lite": "^1.0.30001183",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^7.0.0",
     "core-js": "^3.8.3",
