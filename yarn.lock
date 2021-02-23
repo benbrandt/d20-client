@@ -8574,11 +8574,11 @@ workbox-precaching@^6.1.0:
     workbox-strategies "^6.1.0"
 
 workbox-range-requests@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/workbox-range-requests/-/workbox-range-requests-6.1.0.tgz#5fbe9edfbcdb97153ed5260575a54e53b0f85a2d"
-  integrity sha512-BO025BdAvc6vTBXJfkfibcikMFLmLRECt0FrVrTiiQafdO3jWH9qX9zTdrjYf6GkiIjvejvvmSYegwU1mL6N3Q==
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/workbox-range-requests/-/workbox-range-requests-6.1.1.tgz#4e6d30e91cfc3855ff16cfa3df458e0487da2b4d"
+  integrity sha512-ikZ0ZwbFAVMzJ08rM/spn9zC2tohGllFVii9R1q0+xMKvoGDsyzoQnoKrXgyUvcjRPn6ByFncAJ5lUKKG4TGkA==
   dependencies:
-    workbox-core "^6.1.0"
+    workbox-core "^6.1.1"
 
 workbox-recipes@^6.1.0:
   version "6.1.0"
