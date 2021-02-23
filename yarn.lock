@@ -8373,11 +8373,11 @@ workbox-background-sync@^6.1.0:
     workbox-core "^6.1.0"
 
 workbox-broadcast-update@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/workbox-broadcast-update/-/workbox-broadcast-update-6.1.0.tgz#63c1dc2d519aa6a7b9ce1db2f8da3e1db45b3422"
-  integrity sha512-70G821I1Lb4Ex+rcjfKCbuFJ4WL4RSQsqvcByt/bLpPTTLoE6+VvLX3+1QtSK8P2+NmOsKkAqx9qiQkUdGbaYw==
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/workbox-broadcast-update/-/workbox-broadcast-update-6.1.1.tgz#5815749c9ad22ba4ef5184064a62fbdae3b04bf0"
+  integrity sha512-8fBNOQt8ojWWtz3FbkDnKo8CpN6l8UjD2HpQr8tue7HJVfk0X1gfnzZLIDg7HCXhqF7ld3iQbGQqGPf1ihTY6A==
   dependencies:
-    workbox-core "^6.1.0"
+    workbox-core "^6.1.1"
 
 workbox-build@^6.1.0:
   version "6.1.0"
