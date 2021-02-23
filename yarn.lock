@@ -8558,11 +8558,11 @@ workbox-google-analytics@^6.1.0:
     workbox-strategies "^6.1.0"
 
 workbox-navigation-preload@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/workbox-navigation-preload/-/workbox-navigation-preload-6.1.0.tgz#e36d19f0d49ab5277e6c4e13b92f40da8955d62f"
-  integrity sha512-N0c5Kmzu7lPKvirukbeZ3lN8KEAZU9xA4b1wmpV0VXUfRXVEk2ayXXqwHwMGFVi6FNCHiDLOcC8a2zW5kFLAeg==
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/workbox-navigation-preload/-/workbox-navigation-preload-6.1.1.tgz#3c7d39d5f102f4a76f24b48f97701b16ae56bd40"
+  integrity sha512-vX5qJDk1Z663nuSSSHkcBFQQJwEe4UHynd5uoX3oC0IlecPclAbyT3QetVh0wYdXv6G6XD/LBd3iNZmlSbTosw==
   dependencies:
-    workbox-core "^6.1.0"
+    workbox-core "^6.1.1"
 
 workbox-precaching@^6.1.0:
   version "6.1.0"
