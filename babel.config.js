@@ -4,40 +4,30 @@ module.exports = function (api) {
 
   return {
     sourceType: "unambiguous",
+    ...(env === "test" ? { targets: { node: "current" } } : {}),
     presets: [
-      env === "test"
-        ? [
-            "@babel/preset-env",
-            {
-              bugfixes: true,
-              corejs: { version: 3, proposals: true },
-              shippedProposals: true,
-              targets: {
-                node: "current",
-              },
-              useBuiltIns: "usage",
-            },
-          ]
-        : [
-            "@babel/preset-env",
-            {
-              bugfixes: true,
-              corejs: { version: 3, proposals: true },
-              modules: false,
-              shippedProposals: true,
-              useBuiltIns: "usage",
-            },
-          ],
+      ["@babel/preset-env", { bugfixes: true, shippedProposals: true }],
       "@babel/preset-typescript",
     ],
     plugins: [
       [
         "@babel/plugin-transform-runtime",
         {
+          corejs: false,
+          helpers: true,
           regenerator: false,
           useESModules: env !== "test",
         },
       ],
+      [
+        "babel-plugin-polyfill-corejs3",
+        {
+          method: "usage-global",
+          proposals: true,
+          shippedProposals: true,
+        },
+      ],
+      ["babel-plugin-polyfill-regenerator", { method: "usage-global" }],
     ],
   };
 };
