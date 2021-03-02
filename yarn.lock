@@ -2012,12 +2012,12 @@ babel-plugin-polyfill-corejs3@^0.1.3, babel-plugin-polyfill-corejs3@^0.1.4:
     "@babel/helper-define-polyfill-provider" "^0.1.2"
     core-js-compat "^3.8.1"
 
-babel-plugin-polyfill-regenerator@^0.1.2, babel-plugin-polyfill-regenerator@^0.1.3:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/babel-plugin-polyfill-regenerator/-/babel-plugin-polyfill-regenerator-0.1.3.tgz#350f857225fc640ae1ec78d1536afcbb457db841"
-  integrity sha512-hRjTJQiOYt/wBKEc+8V8p9OJ9799blAJcuKzn1JXh3pApHoWl1Emxh2BHc6MC7Qt6bbr3uDpNxaYQnATLIudEg==
+babel-plugin-polyfill-regenerator@^0.1.2, babel-plugin-polyfill-regenerator@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/babel-plugin-polyfill-regenerator/-/babel-plugin-polyfill-regenerator-0.1.5.tgz#f42a58fd86a1c97fbe3a2752d80a4a3e017203e1"
+  integrity sha512-EyhBA6uN94W97lR7ecQVTvH9F5tIIdEw3ZqHuU4zekMlW82k5cXNXniiB7PRxQm06BqAjVr4sDT1mOy4RcphIA==
   dependencies:
-    "@babel/helper-define-polyfill-provider" "^0.1.2"
+    "@babel/helper-define-polyfill-provider" "^0.1.4"
 
 balanced-match@^1.0.0:
   version "1.0.0"
