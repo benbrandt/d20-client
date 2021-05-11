@@ -58,6 +58,7 @@ const config: webpack.Configuration = {
     filename: `[name].${isEnvProd ? "[contenthash]." : ""}js`,
     chunkFilename: `[name].${isEnvProd ? "[contenthash]." : ""}js`,
   },
+  // @ts-expect-error
   devServer: {
     before(app): void {
       app.use(noopServiceWorkerMiddleware());
@@ -109,7 +110,7 @@ const config: webpack.Configuration = {
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [
-        { from: "public", to: ".", globOptions: { ignore: ["index.html"] } },
+        { from: "public", to: ".", globOptions: { ignore: ["**/index.html"] } },
       ],
     }),
     new HtmlWebpackPlugin({ template: "public/index.html" }),
