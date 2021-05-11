@@ -84,7 +84,7 @@
     "fork-ts-checker-webpack-plugin": "^6.2.6",
     "html-webpack-plugin": "^4.5.1",
     "mini-css-extract-plugin": "^1.6.0",
-    "node-sass": "^5.0.0",
+    "node-sass": "^6.0.0",
     "postcss": "^8.2.15",
     "postcss-loader": "^5.2.0",
     "postcss-preset-env": "^6.7.0",
