@@ -76,7 +76,7 @@ jobs:
         with:
           command: check
 
-      - uses: actions-rs/clippy-check@v1
+      - uses: actions-rs/clippy-check@v1.0.7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: --all-targets --all-features
