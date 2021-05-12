@@ -57,7 +57,7 @@ jobs:
           key: ${{ runner.os }}-cargo-build-target-lint-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Use stable rust
-        uses: actions-rs/toolchain@v1
+        uses: actions-rs/toolchain@v1.0.7
         with:
           toolchain: stable
           profile: minimal
@@ -122,7 +122,7 @@ jobs:
           node-version: 12.x
 
       - name: Use stable rust
-        uses: actions-rs/toolchain@v1
+        uses: actions-rs/toolchain@v1.0.7
         with:
           toolchain: stable
           profile: minimal
