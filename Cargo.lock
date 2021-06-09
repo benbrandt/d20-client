@@ -415,7 +415,7 @@ checksum = "ea6a9290e3c9cf0f18145ef7ffa62d68ee0bf5fcd651017e586dc7fd5da448c2"
 [[package]]
 name = "seed"
 version = "0.8.0"
-source = "git+https://github.com/David-OConnor/seed#8e41afb06636fb85f1eec103f6db99be3b06f8d3"
+source = "git+https://github.com/David-OConnor/seed#b59062b7f40f7c8a36aa8b7f78f48eeae2f0cec9"
 dependencies = [
  "console_error_panic_hook",
  "cookie",
