@@ -60,7 +60,7 @@
     "@types/mini-css-extract-plugin": "^2.0.0",
     "@types/node": "^15.14.0",
     "@types/optimize-css-assets-webpack-plugin": "^5.0.3",
-    "@types/terser-webpack-plugin": "^5.0.3",
+    "@types/terser-webpack-plugin": "^5.0.4",
     "@types/webpack": "^5.28.0",
     "@types/webpack-bundle-analyzer": "^4.4.0",
     "@types/webpack-dev-server": "^3.11.4",
