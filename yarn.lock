@@ -1439,10 +1439,10 @@
     tapable "^2.2.0"
     webpack "^5"
 
-"@types/workbox-webpack-plugin@^5.1.7":
-  version "5.1.7"
-  resolved "https://registry.yarnpkg.com/@types/workbox-webpack-plugin/-/workbox-webpack-plugin-5.1.7.tgz#447976049e610479510f3a9da702681f5b782116"
-  integrity sha512-7cWyDb49OArCn0Nmm8iJD1KR18WIitjgsGDp24Covk7NLuMHmZQQ1985qo/XRbgMSMBRLJn09Flt1OaLsK1jUg==
+"@types/workbox-webpack-plugin@^5.1.8":
+  version "5.1.8"
+  resolved "https://registry.yarnpkg.com/@types/workbox-webpack-plugin/-/workbox-webpack-plugin-5.1.8.tgz#8c014df34877b6fab0c7d4aa85698445e1e0f64b"
+  integrity sha512-1RKsHinzZMDmMNS0OouyMQPEfL2oJr4oXPTGI3YwEuCOsIKDSce+l3KW1qY5IufXs3W2g/ZFlWD2X9SkmaSiZA==
 
 "@typescript-eslint/eslint-plugin@^4.28.1":
   version "4.28.1"
