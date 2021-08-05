@@ -52,7 +52,7 @@
   "devDependencies": {
     "@babel/core": "^7.15.0",
     "@babel/plugin-transform-runtime": "^7.15.0",
-    "@babel/preset-env": "^7.14.9",
+    "@babel/preset-env": "^7.15.0",
     "@babel/preset-typescript": "^7.15.0",
     "@babel/runtime": "^7.14.8",
     "@types/copy-webpack-plugin": "^8.0.1",
