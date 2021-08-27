@@ -1457,10 +1457,10 @@
     tapable "^2.1.1"
     webpack "^5.38.1"
 
-"@types/webpack-dev-server@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@types/webpack-dev-server/-/webpack-dev-server-4.0.0.tgz#d900a731a4d6908956aa3f92aae24868ac46771d"
-  integrity sha512-N4deHpkNcWjqrbiqQDjt8TrkaMjgJabJj0Fjfs3B5ql1rhPyJPIEptWuQHx6M73mVc8o4kTR4u3kg65ddZMiQg==
+"@types/webpack-dev-server@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@types/webpack-dev-server/-/webpack-dev-server-4.0.1.tgz#313a08b725d41577302a9c1b9aa2a568d7027893"
+  integrity sha512-KbCNHmBWjMWrMUqf5OeJYu9grCBq2mx9IMdhb33ibOBuYKum4HSOxJpooLg0KsJSLKteeurzTBSa5fkQUvbbYw==
   dependencies:
     "@types/bonjour" "*"
     "@types/connect-history-api-fallback" "*"
