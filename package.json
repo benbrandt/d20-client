@@ -92,7 +92,7 @@
     "prettier": "^2.4.1",
     "regenerator-runtime": "^0.13.9",
     "sass-loader": "^12.1.0",
-    "style-loader": "^3.2.1",
+    "style-loader": "^3.3.0",
     "terser-webpack-plugin": "^5.2.4",
     "ts-node": "^10.2.1",
     "tsconfig-paths": "^3.11.0",
