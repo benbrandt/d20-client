@@ -58,7 +58,7 @@
     "@types/copy-webpack-plugin": "^8.0.1",
     "@types/html-webpack-plugin": "^3.2.6",
     "@types/mini-css-extract-plugin": "^2.4.0",
-    "@types/node": "^16.11.1",
+    "@types/node": "^16.11.3",
     "@types/optimize-css-assets-webpack-plugin": "^5.0.4",
     "@types/terser-webpack-plugin": "^5.2.0",
     "@types/webpack": "^5.28.0",
