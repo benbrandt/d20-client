@@ -58,17 +58,18 @@ const config: webpack.Configuration = {
     filename: `[name].${isEnvProd ? "[contenthash]." : ""}js`,
     chunkFilename: `[name].${isEnvProd ? "[contenthash]." : ""}js`,
   },
-  // @ts-expect-error
   devServer: {
-    before(app): void {
-      app.use(noopServiceWorkerMiddleware());
+    onBeforeSetupMiddleware(devServer): void {
+      devServer.app.use(noopServiceWorkerMiddleware());
     },
-    compress: true,
-    contentBase: dist,
+    devMiddleware: {
+      publicPath: "/",
+    },
+    static: {
+      publicPath: dist,
+      watch: true,
+    },
     hot: true,
-    overlay: true,
-    publicPath: "/",
-    watchContentBase: true,
   },
   devtool: isEnvProd ? "source-map" : "cheap-module-source-map",
   resolve: {
