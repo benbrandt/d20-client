@@ -219,9 +219,9 @@ dependencies = [
 
 [[package]]
 name = "gloo-file"
-version = "0.1.0"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8f9fecfe46b5dc3cc46f58e98ba580cc714f2c93860796d002eb3527a465ef49"
+checksum = "d31ba1f51868ae10a0b665c6dccd5ed967486e7c17055d1c889596ee983be493"
 dependencies = [
  "futures-channel",
  "gloo-events",
@@ -238,6 +238,17 @@ checksum = "47204a46aaff920a1ea58b11d03dec6f704287d27561724a4631e450654a891f"
 dependencies = [
  "futures-channel",
  "futures-core",
+ "js-sys",
+ "wasm-bindgen",
+ "web-sys",
+]
+
+[[package]]
+name = "gloo-utils"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3d77d28d9a6f7c384d9e40293fa11f05558bf928a993208e12528ee6633cb415"
+dependencies = [
  "js-sys",
  "wasm-bindgen",
  "web-sys",
@@ -425,7 +436,7 @@ checksum = "ea6a9290e3c9cf0f18145ef7ffa62d68ee0bf5fcd651017e586dc7fd5da448c2"
 [[package]]
 name = "seed"
 version = "0.8.0"
-source = "git+https://github.com/David-OConnor/seed#5421d46d83b224414ca72e080837f428c08d4e5b"
+source = "git+https://github.com/David-OConnor/seed#f83728fea048a1505cee48f196ce3038f49e6910"
 dependencies = [
  "console_error_panic_hook",
  "cookie",
@@ -435,6 +446,7 @@ dependencies = [
  "getrandom",
  "gloo-file",
  "gloo-timers",
+ "gloo-utils",
  "indexmap",
  "js-sys",
  "rand",
