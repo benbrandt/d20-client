@@ -65,7 +65,7 @@
     "@types/webpack-dev-server": "^4.5.1",
     "@types/workbox-webpack-plugin": "^5.1.8",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
-    "@typescript-eslint/parser": "^5.10.1",
+    "@typescript-eslint/parser": "^5.10.2",
     "@wasm-tool/wasm-pack-plugin": "^1.6.0",
     "babel-loader": "^8.2.3",
     "babel-plugin-polyfill-corejs3": "^0.5.1",
