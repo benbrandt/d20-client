@@ -68,7 +68,7 @@
     "@typescript-eslint/parser": "^5.10.2",
     "@wasm-tool/wasm-pack-plugin": "^1.6.0",
     "babel-loader": "^8.2.3",
-    "babel-plugin-polyfill-corejs3": "^0.5.1",
+    "babel-plugin-polyfill-corejs3": "^0.5.2",
     "babel-plugin-polyfill-regenerator": "^0.3.1",
     "caniuse-lite": "^1.0.30001304",
     "clean-webpack-plugin": "^4.0.0",
