@@ -70,7 +70,7 @@
     "babel-loader": "^8.2.3",
     "babel-plugin-polyfill-corejs3": "^0.5.1",
     "babel-plugin-polyfill-regenerator": "^0.3.1",
-    "caniuse-lite": "^1.0.30001304",
+    "caniuse-lite": "^1.0.30001305",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^10.2.4",
     "core-js": "^3.20.2",
